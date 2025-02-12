@@ -25,15 +25,25 @@ public class Constants {
     public static final double ELEVATORVOLTS_D_VALUE = 0;
     public static final double ELEVATORTORQUE_P_VALUE = 0;
     public static final double ELEVATORTORQUE_D_VALUE = 0;
+    public static final double CLAWVOLTS_P_VALUE = 0;
+    public static final double CLAWVOLTS_D_VALUE = 0;
+    public static final double CLAWTORQUE_P_VALUE = 0;
+    public static final double CLAWTORQUE_D_VALUE = 0;
 //  Sets the KS value
     public static final double STEER_S_VALUE = 0.13962;
 //Elevator Constants
     public static final int elevatorLeadID = 2;
     public static final int elevatorFollowID = 3;
+    
     public static final double elevatorSpeed = .2;
     public static final double peakVoltage = 8;
     public static final double peakAmps = 8;
     public static final double startPosition = 0;
+    
+//Claw Constants
+public static final int clawLeadID = 2;
+public static final int clawFollowID = 3;
+public static final double clawSpeed = .2;
 
 /// Vision Constants
     public static class VisionConstants {

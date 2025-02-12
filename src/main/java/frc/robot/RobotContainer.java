@@ -21,11 +21,13 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.ClawTeleOp;
 import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorTeleOp;
 import frc.robot.commands.ElevatorUpCommand;
 import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 
@@ -46,10 +48,11 @@ public class RobotContainer {
     private SlewRateLimiter m_strafeY;
 
     private final CommandXboxController joystick = new CommandXboxController(0);
-    private final XboxController xboxController = new XboxController(1);
+    private final CommandXboxController xboxController = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Elevator m_elevator = new Elevator();
+    public final Claw m_Claw = new Claw();
     // public BooleanSupplier spinBoolean;
 
     private final SendableChooser<Command> autoChooser;
@@ -95,9 +98,14 @@ drivetrain.applyRequest(() ->
         joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-        
-        joystick.y().whileTrue(new ElevatorUpCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        joystick.a().whileTrue(new ElevatorDownCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+
+        // xboxController.y().whileTrue(new ElevatorUpCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        // xboxController.a().whileTrue(new ElevatorDownCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.rightBumper().whileTrue(new ClawTeleOp(xboxController, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+
         
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));

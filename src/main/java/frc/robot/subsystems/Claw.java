@@ -19,41 +19,41 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 
-public class Elevator implements Subsystem {
-    TalonFX elevatorLead = new TalonFX(Constants.elevatorLeadID);
-    TalonFX elevatorFollow = new TalonFX(Constants.elevatorFollowID);
+public class Claw implements Subsystem {
+    TalonFX clawLead = new TalonFX(Constants.clawLeadID);
+    TalonFX clawFollow = new TalonFX(Constants.clawFollowID);
 
     // XboxController xboxController = new XboxController(1);
     CommandXboxController xboxController = new CommandXboxController(1);
 
-    public TalonFXConfiguration elevatorConfigs = new TalonFXConfiguration();
+    public TalonFXConfiguration clawConfigs = new TalonFXConfiguration();
 
     public final PositionVoltage m_positionVoltage = new PositionVoltage(0).withSlot(0);
     public final PositionTorqueCurrentFOC m_positionTorque = new PositionTorqueCurrentFOC(0).withSlot(1);
     public final NeutralOut m_brake = new NeutralOut();
 
-    double elevatorSpeed = Constants.elevatorSpeed;
+    double clawSpeed = Constants.clawSpeed;
 
-    public void ElevatorConfiguration() {
-        elevatorConfigs.Slot0.kP = Constants.ELEVATORVOLTS_P_VALUE;
-        elevatorConfigs.Slot0.kI = 0;
-        elevatorConfigs.Slot0.kD = Constants.ELEVATORVOLTS_D_VALUE;
+    public void ClawConfiguration() {
+        clawConfigs.Slot0.kP = Constants.CLAWVOLTS_P_VALUE;
+        clawConfigs.Slot0.kI = 0;
+        clawConfigs.Slot0.kD = Constants.CLAWVOLTS_D_VALUE;
 
-        elevatorConfigs.Voltage.withPeakForwardVoltage(Volts.of(Constants.peakVoltage))
+        clawConfigs.Voltage.withPeakForwardVoltage(Volts.of(Constants.peakVoltage))
             .withPeakReverseVoltage(Volts.of(-Constants.peakVoltage));
         
-        elevatorConfigs.Slot1.kP = Constants.ELEVATORTORQUE_P_VALUE;
-        elevatorConfigs.Slot1.kI = 0;
-        elevatorConfigs.Slot1.kD = Constants.ELEVATORTORQUE_D_VALUE;
+        clawConfigs.Slot1.kP = Constants.CLAWTORQUE_P_VALUE;
+        clawConfigs.Slot1.kI = 0;
+        clawConfigs.Slot1.kD = Constants.CLAWTORQUE_D_VALUE;
 
-        elevatorConfigs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(Constants.peakAmps))
+        clawConfigs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(Constants.peakAmps))
             .withPeakReverseTorqueCurrent(Amps.of(Constants.peakAmps));
         
         StatusCode statusLead = StatusCode.StatusCodeNotInitialized;
         StatusCode statusFollow = StatusCode.StatusCodeNotInitialized;
         for (int i = 0; i < 5; ++i) {
-            statusLead = elevatorLead.getConfigurator().apply(elevatorConfigs);
-            statusFollow = elevatorFollow.getConfigurator().apply(elevatorConfigs);
+            statusLead = clawLead.getConfigurator().apply(clawConfigs);
+            statusFollow = clawFollow.getConfigurator().apply(clawConfigs);
             if (statusLead.isOK() && statusFollow.isOK()) break;
         }
         if (!statusLead.isOK() && !statusFollow.isOK()) {
@@ -61,28 +61,28 @@ public class Elevator implements Subsystem {
             System.out.println("Could not apply configs to follow, error code: " + statusFollow.toString());
         }
 
-        elevatorLead.setPosition(Constants.startPosition);
-        elevatorFollow.setPosition(Constants.startPosition);
+        clawLead.setPosition(Constants.startPosition);
+        clawFollow.setPosition(Constants.startPosition);
 
-        elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), true));
+        clawFollow.setControl(new Follower(clawLead.getDeviceID(), true));
 
     }
 
-    public Elevator() {
-        ElevatorConfiguration();
+    public Claw() {
+        ClawConfiguration();
     }
 
-    public void ElevatorUp(){
-        // elevatorLead.set(Constants.elevatorSpeed);
-        elevatorLead.set(xboxController.getLeftY()*.1);
+    public void ClawUp(){
+        // clawLead.set(Constants.clawSpeed);
+        clawLead.set(xboxController.getRightY()*.1);
     }
 
-    public void ElevatorDown() {
-        elevatorLead.set(xboxController.getLeftY()*.1);
+    public void ClawDown() {
+        clawLead.set(xboxController.getRightY()*.1);
     }
 
-    public void ElevatorStop() {
-        elevatorLead.set(0);
+    public void ClawStop() {
+        clawLead.set(0);
     }
     
 }
