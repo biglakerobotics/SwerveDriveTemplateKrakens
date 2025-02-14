@@ -10,18 +10,24 @@ import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.ControlModeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
+import frc.robot.autocommands.CoralLoadingPos;
 
 public class Elevator implements Subsystem {
     TalonFX elevatorLead = new TalonFX(Constants.elevatorLeadID);
     TalonFX elevatorFollow = new TalonFX(Constants.elevatorFollowID);
+    public DigitalInput elevatorZeroSwitch = new DigitalInput(0);
+    public boolean m_elevatorZeroTrue;
+    public double elevatorPos;
 
     // XboxController xboxController = new XboxController(1);
     CommandXboxController xboxController = new CommandXboxController(1);
@@ -64,7 +70,7 @@ public class Elevator implements Subsystem {
         elevatorLead.setPosition(Constants.startPosition);
         elevatorFollow.setPosition(Constants.startPosition);
 
-        elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), true));
+        elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), false));
 
     }
 
@@ -72,13 +78,55 @@ public class Elevator implements Subsystem {
         ElevatorConfiguration();
     }
 
+
+    public boolean ElevatorStartPos() {
+        if (!elevatorZeroSwitch.get()) {
+            elevatorLead.set(-elevatorSpeed);
+        } else {
+            ElevatorStop();
+            elevatorLead.setPosition(0);
+            elevatorFollow.setPosition(0);
+            m_elevatorZeroTrue = true;
+            System.out.println("\n Hit LimitSwitch Setting Position To Zero");
+        }
+        return m_elevatorZeroTrue;
+    }
+
+    public void CoralLoadingPos() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.CoralLoadingPos));
+    }
+
+    public void ReefLevelOne() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelOnePos));
+    }
+
+    public void ReefLevelTwo() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelTwoPos));
+    }
+
+    public void ReefLevelThree() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelThreePos));
+    }
+
+    public void ReefLevelFour() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelFourPos));
+    }
+
+    public void TopOfElevator() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.TopOfElevator));
+    }
+
+    public void PickupPos() {
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.PickupPos));
+    }
+
     public void ElevatorUp(){
         // elevatorLead.set(Constants.elevatorSpeed);
-        elevatorLead.set(xboxController.getLeftY()*.1);
+        elevatorLead.set(xboxController.getLeftY()*.3);
     }
 
     public void ElevatorDown() {
-        elevatorLead.set(xboxController.getLeftY()*.1);
+        elevatorLead.set(xboxController.getLeftY()*.3);
     }
 
     public void ElevatorStop() {

@@ -31,18 +31,26 @@ public class Constants {
     public static final double CLAWTORQUE_D_VALUE = 0;
 //  Sets the KS value
     public static final double STEER_S_VALUE = 0.13962;
-//Elevator Constants
-    public static final int elevatorLeadID = 2;
-    public static final int elevatorFollowID = 3;
+//  Elevator Constants
+    public static final int elevatorLeadID = 4;
+    public static final int elevatorFollowID = 5;
     
     public static final double elevatorSpeed = .2;
     public static final double peakVoltage = 8;
     public static final double peakAmps = 8;
     public static final double startPosition = 0;
+
+//  Elevator Positons
+    public static final double CoralLoadingPos = 0;
+    public static final double ReefLevelOnePos = 0;
+    public static final double ReefLevelTwoPos = 0;
+    public static final double ReefLevelThreePos = 0;
+    public static final double ReefLevelFourPos = 0;
+    public static final double TopOfElevator = 0;
+    public static final double PickupPos = 0;
     
 //Claw Constants
-public static final int clawLeadID = 2;
-public static final int clawFollowID = 3;
+public static final int clawID = 6;
 public static final double clawSpeed = .2;
 
 /// Vision Constants

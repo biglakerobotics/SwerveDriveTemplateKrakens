@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.autocommands.ElevatorStartPos;
 import frc.robot.commands.ClawTeleOp;
 import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorTeleOp;
@@ -55,14 +56,14 @@ public class RobotContainer {
     public final Claw m_Claw = new Claw();
     // public BooleanSupplier spinBoolean;
 
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
         new PhotonVisionCommand(drivetrain).schedule();
 
         
 
-        autoChooser = AutoBuilder.buildAutoChooser("Tests");
-        SmartDashboard.putData("Auto Mode", autoChooser);
+        // autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        // SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
         
         m_elevator.setDefaultCommand(new ElevatorTeleOp(xboxController, m_elevator));
@@ -104,6 +105,7 @@ drivetrain.applyRequest(() ->
         // xboxController.a().whileTrue(new ElevatorDownCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.rightBumper().whileTrue(new ClawTeleOp(xboxController, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.y().whileTrue(new ElevatorStartPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
         
@@ -114,6 +116,7 @@ drivetrain.applyRequest(() ->
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        return null;
+        // return autoChooser.getSelected();
     }
 }

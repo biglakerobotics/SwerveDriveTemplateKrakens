@@ -157,7 +157,7 @@ private void configureAutoBuilder(){
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        configureAutoBuilder();
+        // configureAutoBuilder();
     }
 
     /**
@@ -182,7 +182,7 @@ private void configureAutoBuilder(){
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        configureAutoBuilder();
+        // configureAutoBuilder();
     }
 
     /**
@@ -215,7 +215,7 @@ private void configureAutoBuilder(){
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        configureAutoBuilder();
+        // configureAutoBuilder();
     }
 
     /**

@@ -20,8 +20,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 
 public class Claw implements Subsystem {
-    TalonFX clawLead = new TalonFX(Constants.clawLeadID);
-    TalonFX clawFollow = new TalonFX(Constants.clawFollowID);
+    TalonFX clawLead = new TalonFX(Constants.clawID);
 
     // XboxController xboxController = new XboxController(1);
     CommandXboxController xboxController = new CommandXboxController(1);
@@ -50,21 +49,15 @@ public class Claw implements Subsystem {
             .withPeakReverseTorqueCurrent(Amps.of(Constants.peakAmps));
         
         StatusCode statusLead = StatusCode.StatusCodeNotInitialized;
-        StatusCode statusFollow = StatusCode.StatusCodeNotInitialized;
         for (int i = 0; i < 5; ++i) {
             statusLead = clawLead.getConfigurator().apply(clawConfigs);
-            statusFollow = clawFollow.getConfigurator().apply(clawConfigs);
-            if (statusLead.isOK() && statusFollow.isOK()) break;
+            if (statusLead.isOK()) break;
         }
-        if (!statusLead.isOK() && !statusFollow.isOK()) {
+        if (!statusLead.isOK()) {
             System.out.println("Could not apply configs to lead, error code: " + statusLead.toString());
-            System.out.println("Could not apply configs to follow, error code: " + statusFollow.toString());
         }
 
         clawLead.setPosition(Constants.startPosition);
-        clawFollow.setPosition(Constants.startPosition);
-
-        clawFollow.setControl(new Follower(clawLead.getDeviceID(), true));
 
     }
 
