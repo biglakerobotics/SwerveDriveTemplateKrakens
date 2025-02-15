@@ -113,7 +113,6 @@ public class Elevator implements Subsystem {
 
     public void ReefLevelOne() {
         elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelOnePos));
-        System.out.println("HEY I'M RUNNING!" + elevatorLead.getPosition());
 }
 
     public void ReefLevelTwo() {
@@ -122,10 +121,6 @@ public class Elevator implements Subsystem {
 
     public void ReefLevelThree() {
         elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelThreePos));
-    }
-
-    public void ReefLevelFour() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelFourPos));
     }
 
     public void TopOfElevator() {

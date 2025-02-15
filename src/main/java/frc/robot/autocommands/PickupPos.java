@@ -1,19 +1,23 @@
 package frc.robot.autocommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 
 public class PickupPos extends Command {
     private final Elevator m_elevator;
+    private final Claw m_claw;
 
-    public PickupPos(Elevator subsystem) {
+    public PickupPos(Elevator subsystem, Claw claw) {
         m_elevator = subsystem;
-        addRequirements(m_elevator);
+        m_claw = claw;
+        addRequirements(m_elevator, claw);
     }
 
     @Override
     public void execute() {
         m_elevator.PickupPos();
+        m_claw.PickupPos();
     }
 
     @Override

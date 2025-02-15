@@ -21,9 +21,9 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.autocommands.CoralLoadingPos;
 import frc.robot.autocommands.ElevatorStartPos;
 import frc.robot.autocommands.PickupPos;
-import frc.robot.autocommands.ReefLevelFour;
 import frc.robot.autocommands.ReefLevelOne;
 import frc.robot.autocommands.ReefLevelTwo;
 import frc.robot.autocommands.ReefLevelThree;
@@ -120,10 +120,11 @@ drivetrain.applyRequest(() ->
         // 7(options) start pos
         // xboxController.button(7).whileTrue(new ElevatorStartPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         // xboxController.button(6).whileTrue(new PickupPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.y().whileTrue(new ReefLevelOne(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.x().whileTrue(new ReefLevelTwo(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.b().whileTrue(new ReefLevelThree(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.a().whileTrue(new ReefLevelFour(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.y().onTrue(new ReefLevelOne(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.x().onTrue(new ReefLevelTwo(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.b().onTrue(new ReefLevelThree(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.a().onTrue(new CoralLoadingPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.back().onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
 

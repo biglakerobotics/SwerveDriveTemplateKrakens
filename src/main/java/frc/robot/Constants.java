@@ -23,8 +23,8 @@ public class Constants {
     public static final double ELEVATORVOLTS_D_VALUE = .1;
     public static final double ELEVATORTORQUE_P_VALUE = 0;
     public static final double ELEVATORTORQUE_D_VALUE = 0;
-    public static final double CLAWVOLTS_P_VALUE = .2;
-    public static final double CLAWVOLTS_D_VALUE = .1;
+    public static final double CLAWVOLTS_P_VALUE = .4;
+    public static final double CLAWVOLTS_D_VALUE = .01;
     public static final double CLAWTORQUE_P_VALUE = 0;
     public static final double CLAWTORQUE_D_VALUE = 0;
 //  Sets the KS value
@@ -42,19 +42,18 @@ public class Constants {
     public static final double softReverseLimitElevator = 0;
 
 //  Elevator Positons
-    public static final double CoralLoadingPos = 0;
-    public static final double ReefLevelOnePos = 50;
-    public static final double ReefLevelTwoPos = 0;
-    public static final double ReefLevelThreePos = 0;
-    public static final double ReefLevelFourPos = 0;
-    public static final double TopOfElevator = 0;
+    public static final double CoralLoadingPos = 30;
+    public static final double ReefLevelOnePos = 16;
+    public static final double ReefLevelTwoPos = 50;
+    public static final double ReefLevelThreePos = 107;
+    public static final double TopOfElevator = 107;
     public static final double PickupPos = 0;
 // Claw Positions
     public static final double ClawCoralLoadingPos = 0;
-    public static final double ClawReefLevelOnePos = 8;
-    public static final double ClawReefLevelTwoPos = 0;
-    public static final double ClawReefLevelThreePos = 0;
-    public static final double ClawReefLevelFourPos = 0;
+    public static final double ClawReefLevelOnePos = 10;
+    public static final double ClawReefLevelTwoPos = 10;
+    public static final double ClawReefLevelThreePos = 10;
+    public static final double ClawReefLevelFourPos = 10;
     public static final double ClawTopOfElevator = 0;
     public static final double ClawPickupPos = 0;
     
