@@ -22,6 +22,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.autocommands.ElevatorStartPos;
+import frc.robot.autocommands.PickupPos;
+import frc.robot.autocommands.ReefLevelFour;
+import frc.robot.autocommands.ReefLevelOne;
+import frc.robot.autocommands.ReefLevelTwo;
+import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.ClawTeleOp;
 import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorTeleOp;
@@ -101,11 +106,28 @@ drivetrain.applyRequest(() ->
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
 
-        // xboxController.y().whileTrue(new ElevatorUpCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        // xboxController.a().whileTrue(new ElevatorDownCommand(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        //Elevator controller
+        //Manual Elevator
+        // bumper + joystick = move arm and elevator        
         xboxController.rightBumper().whileTrue(new ClawTeleOp(xboxController, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.y().whileTrue(new ElevatorStartPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        //Presets
+        // y reef 1
+        // x reef 2
+        // b reef 3
+        // a reef 4
+        // 6(share) pick up preset
+        // 7(options) start pos
+        // xboxController.button(7).whileTrue(new ElevatorStartPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        // xboxController.button(6).whileTrue(new PickupPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.y().whileTrue(new ReefLevelOne(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.x().whileTrue(new ReefLevelTwo(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.b().whileTrue(new ReefLevelThree(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.a().whileTrue(new ReefLevelFour(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+
+
+
 
 
         

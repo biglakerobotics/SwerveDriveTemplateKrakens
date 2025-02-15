@@ -31,8 +31,6 @@ public class Claw implements Subsystem {
     public final PositionTorqueCurrentFOC m_positionTorque = new PositionTorqueCurrentFOC(0).withSlot(1);
     public final NeutralOut m_brake = new NeutralOut();
 
-    double clawSpeed = Constants.clawSpeed;
-
     public void ClawConfiguration() {
         clawConfigs.Slot0.kP = Constants.CLAWVOLTS_P_VALUE;
         clawConfigs.Slot0.kI = 0;
@@ -44,6 +42,10 @@ public class Claw implements Subsystem {
         clawConfigs.Slot1.kP = Constants.CLAWTORQUE_P_VALUE;
         clawConfigs.Slot1.kI = 0;
         clawConfigs.Slot1.kD = Constants.CLAWTORQUE_D_VALUE;
+
+        clawConfigs.CurrentLimits.withStatorCurrentLimitEnable(true).withStatorCurrentLimit(Constants.peakAmps);
+        clawConfigs.SoftwareLimitSwitch.withForwardSoftLimitEnable(true).withForwardSoftLimitThreshold(Constants.softForwardLimitClaw);
+        clawConfigs.SoftwareLimitSwitch.withReverseSoftLimitEnable(true).withReverseSoftLimitThreshold(Constants.softReverseLimitClaw);
 
         clawConfigs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(Constants.peakAmps))
             .withPeakReverseTorqueCurrent(Amps.of(Constants.peakAmps));
@@ -58,6 +60,7 @@ public class Claw implements Subsystem {
         }
 
         clawLead.setPosition(Constants.startPosition);
+        clawLead.setNeutralMode(NeutralModeValue.Brake);
 
     }
 
@@ -67,15 +70,44 @@ public class Claw implements Subsystem {
 
     public void ClawUp(){
         // clawLead.set(Constants.clawSpeed);
-        clawLead.set(xboxController.getRightY()*.1);
+        clawLead.set(xboxController.getRightY() * -Constants.clawSpeed);
     }
 
     public void ClawDown() {
-        clawLead.set(xboxController.getRightY()*.1);
+        clawLead.set(xboxController.getRightY() * -Constants.clawSpeed);
     }
+    
 
     public void ClawStop() {
         clawLead.set(0);
+    }
+
+    public void CoralLoadingPos(){
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawCoralLoadingPos));
+    }
+    public void ReefLevelOne() {
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelOnePos));
+        System.out.println("Running Command");
+    }
+
+    public void ReefLevelTwo() {
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelTwoPos));
+    }
+
+    public void ReefLevelThree() {
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelThreePos));
+    }
+
+    public void ReefLevelFour() {
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelFourPos));
+    }
+
+    public void TopOfclaw() {
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawTopOfElevator));
+    }
+
+    public void PickupPos() {
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawPickupPos));
     }
     
 }

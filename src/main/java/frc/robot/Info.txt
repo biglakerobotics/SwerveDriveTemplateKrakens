@@ -1,0 +1,13 @@
+Button Bindings
+1 = A
+2 = B
+3 = X 
+4 = Y 
+5 = LB 
+6 = RB 
+7 = BackButton 
+8 = StartButton 
+9 = LeftStickDown 
+10 = RightStickDown 
+LeftTrigger
+RightTrigger

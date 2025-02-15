@@ -17,7 +17,7 @@ public class ElevatorUpCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_elevator.ElevatorStop();
+        // m_elevator.ElevatorStop();
     }
 
     @Override

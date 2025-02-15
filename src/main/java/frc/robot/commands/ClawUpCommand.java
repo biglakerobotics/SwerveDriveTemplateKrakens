@@ -17,11 +17,12 @@ public class ClawUpCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        m_claw.ClawStop();
+        // m_claw.ClawStop();
     }
 
     @Override
     public boolean isFinished() {
+        // m_claw.ClawStop();
         return false;
     }
 

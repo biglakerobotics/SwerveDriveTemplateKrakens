@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Volts;
 
+import java.util.concurrent.TransferQueue;
+
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.controls.Follower;
@@ -11,6 +13,7 @@ import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ControlModeValue;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -28,6 +31,12 @@ public class Elevator implements Subsystem {
     public DigitalInput elevatorZeroSwitch = new DigitalInput(0);
     public boolean m_elevatorZeroTrue;
     public double elevatorPos;
+
+    TalonFX clawMotor = new TalonFX(Constants.clawID);
+    
+
+
+
 
     // XboxController xboxController = new XboxController(1);
     CommandXboxController xboxController = new CommandXboxController(1);
@@ -52,6 +61,12 @@ public class Elevator implements Subsystem {
         elevatorConfigs.Slot1.kI = 0;
         elevatorConfigs.Slot1.kD = Constants.ELEVATORTORQUE_D_VALUE;
 
+        elevatorConfigs.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+
+        elevatorConfigs.CurrentLimits.withStatorCurrentLimit(Constants.peakAmps).withStatorCurrentLimitEnable(true);
+        elevatorConfigs.SoftwareLimitSwitch.withForwardSoftLimitEnable(true).withForwardSoftLimitThreshold(Constants.softForwardLimitElevator);
+        elevatorConfigs.SoftwareLimitSwitch.withReverseSoftLimitEnable(true).withReverseSoftLimitThreshold(Constants.softReverseLimitElevator);
+
         elevatorConfigs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(Constants.peakAmps))
             .withPeakReverseTorqueCurrent(Amps.of(Constants.peakAmps));
         
@@ -70,7 +85,7 @@ public class Elevator implements Subsystem {
         elevatorLead.setPosition(Constants.startPosition);
         elevatorFollow.setPosition(Constants.startPosition);
 
-        elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), false));
+        elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), true)); 
 
     }
 
@@ -98,7 +113,8 @@ public class Elevator implements Subsystem {
 
     public void ReefLevelOne() {
         elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelOnePos));
-    }
+        System.out.println("HEY I'M RUNNING!" + elevatorLead.getPosition());
+}
 
     public void ReefLevelTwo() {
         elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelTwoPos));
@@ -122,11 +138,11 @@ public class Elevator implements Subsystem {
 
     public void ElevatorUp(){
         // elevatorLead.set(Constants.elevatorSpeed);
-        elevatorLead.set(xboxController.getLeftY()*.3);
+        elevatorLead.set(-xboxController.getLeftY()*Constants.elevatorSpeed);
     }
 
     public void ElevatorDown() {
-        elevatorLead.set(xboxController.getLeftY()*.3);
+        elevatorLead.set(-xboxController.getLeftY()*Constants.elevatorSpeed);
     }
 
     public void ElevatorStop() {
