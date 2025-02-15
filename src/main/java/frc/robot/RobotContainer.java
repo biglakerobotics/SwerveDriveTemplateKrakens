@@ -8,29 +8,21 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.autocommands.CoralLoadingPos;
-import frc.robot.autocommands.ElevatorStartPos;
 import frc.robot.autocommands.PickupPos;
 import frc.robot.autocommands.ReefLevelOne;
 import frc.robot.autocommands.ReefLevelTwo;
 import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.ClawTeleOp;
-import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorTeleOp;
-import frc.robot.commands.ElevatorUpCommand;
 import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Claw;
@@ -71,7 +63,7 @@ public class RobotContainer {
         // SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
         
-        m_elevator.setDefaultCommand(new ElevatorTeleOp(xboxController, m_elevator));
+        m_elevator.setDefaultCommand(new ElevatorTeleOp(m_elevator));
     }
 
     private void configureBindings() {
@@ -109,8 +101,8 @@ drivetrain.applyRequest(() ->
         //Elevator controller
         //Manual Elevator
         // bumper + joystick = move arm and elevator        
-        xboxController.rightBumper().whileTrue(new ClawTeleOp(xboxController, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.rightBumper().whileTrue(new ClawTeleOp(m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         //Presets
         // y reef 1
         // x reef 2
