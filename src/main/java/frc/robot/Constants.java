@@ -20,9 +20,14 @@ public class Constants {
     public static final double STEER_P_VALUE = 22.942; 
     public static final double STEER_D_VALUE = 0.85373; 
     public static final double ELEVATORVOLTS_P_VALUE = .5;
+    public static final double ELEVATORVOLTS_I_VALUE = 0;
     public static final double ELEVATORVOLTS_D_VALUE = .1;
     public static final double ELEVATORTORQUE_P_VALUE = 0;
+    public static final double ELEVATORTORQUE_I_VALUE = 0;
     public static final double ELEVATORTORQUE_D_VALUE = 0;
+    public static final double ELEVATORMOTIONMAGIC_P_VALUE = 0;
+    public static final double ELEVATORMOTIONMAGIC_I_VALUE = 0;
+    public static final double ELEVATORMOTIONMAGIC_D_VALUE = 0;
     public static final double CLAWVOLTS_P_VALUE = .4;
     public static final double CLAWVOLTS_D_VALUE = .01;
     public static final double CLAWTORQUE_P_VALUE = 0;
