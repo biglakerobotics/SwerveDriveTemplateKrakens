@@ -1,5 +1,8 @@
 package frc.robot;
 
+import static frc.robot.Constants.VisionConstants.kRobotToBackCam;
+import static frc.robot.Constants.VisionConstants.kRobotToFrontCam;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
@@ -87,11 +90,15 @@ public static final double softReverseLimitClaw = 0;
 
 /// Vision Constants
     public static class VisionConstants {
+    
+        // The standard deviations of our vision estimated poses, which affect correction rate
         public static final String kFrontCameraName = "dumbdumbcamera";
         public static final String kBackCameraName = "BackCamera";
 
         
         //front camera!
+
+        
         public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(Units.inchesToMeters(frontCameraX),Units.inchesToMeters(frontCameraY),Units.inchesToMeters(frontCameraZ)),
             new Rotation3d(frontCameraRoll,Units.degreesToRadians(frontCameraPitch),Units.degreesToRadians(frontCameraYaw))
@@ -101,12 +108,20 @@ public static final double softReverseLimitClaw = 0;
         public static final Transform3d kRobotToBackCam = new Transform3d(
             new Translation3d(Units.inchesToMeters(backCameraX), Units.inchesToMeters(backCameraY), Units.inchesToMeters(backCameraZ) ),
             new Rotation3d(backCameraRoll,Units.degreesToRadians(backCameraPitch),Units.degreesToRadians(backCameraYaw)));
-        
-     
-    public static final AprilTagFieldLayout kTagLayout = AprilTagFields.kDefaultField.loadAprilTagLayoutField();
 
-    public  static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(4,4,8);
-    public  static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.5, 0.5, 1);
+
+        public static final String[] CAMERA_NAMES = new String[]{
+            kFrontCameraName, kBackCameraName
+        };
+
+        public static final Transform3d[] ROBOT_TO_CAMERA_TRANSFORMS = new Transform3d[]{
+            kRobotToFrontCam, kRobotToBackCam
+        };
+
+    public static final AprilTagFieldLayout APRILTAG_FIELD_LAYOUT = AprilTagFields.k2025Reefscape.loadAprilTagLayoutField();
+
+    public  static final Matrix<N3, N1> SINGLE_TAG_STD_DEVS = VecBuilder.fill(4,4,8);
+    public  static final Matrix<N3, N1> MULTI_TAG_STD_DEVS = VecBuilder.fill(0.5, 0.5, 1);
 
     }
 }

@@ -64,7 +64,7 @@ public class RobotContainer {
 
     // private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-        new PhotonVisionCommand(drivetrain).schedule();
+        // new PhotonVisionCommand(drivetrain).schedule();
 
         
 
