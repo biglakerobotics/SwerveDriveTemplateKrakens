@@ -137,7 +137,7 @@ private void configureAutoBuilder(){
         }
     }
     /* The SysId routine to test */
-    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineSteer; 
+    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation;
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
@@ -270,7 +270,6 @@ private void configureAutoBuilder(){
             });
         }
     }
-    //chris p fry
 
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();
