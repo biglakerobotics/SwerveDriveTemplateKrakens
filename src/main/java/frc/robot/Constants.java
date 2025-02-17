@@ -17,7 +17,7 @@ public class Constants {
 //  Sets P and D values of the PIDs 
     public static final double DRIVE_P_VALUE = 0.062203; 
     public static final double DRIVE_D_VALUE = 0; 
-    public static final double STEER_P_VALUE = 22.942; 
+    public static final double STEER_P_VALUE = 11.942; 
     public static final double STEER_D_VALUE = 0.85373; 
     public static final double ELEVATORVOLTS_P_VALUE = .5;
     public static final double ELEVATORVOLTS_D_VALUE = .1;
