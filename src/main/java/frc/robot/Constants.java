@@ -17,8 +17,8 @@ public class Constants {
 //  Sets P and D values of the PIDs 
     public static final double DRIVE_P_VALUE = 0.062203; 
     public static final double DRIVE_D_VALUE = 0; 
-    public static final double STEER_P_VALUE = 22.942; 
-    public static final double STEER_D_VALUE = 0.85373; 
+    public static final double STEER_P_VALUE = 10; 
+    public static final double STEER_D_VALUE = 0.1; 
     public static final double ELEVATORVOLTS_P_VALUE = .5;
     public static final double ELEVATORVOLTS_D_VALUE = .1;
     public static final double ELEVATORTORQUE_P_VALUE = 0;
@@ -28,7 +28,7 @@ public class Constants {
     public static final double CLAWTORQUE_P_VALUE = 0;
     public static final double CLAWTORQUE_D_VALUE = 0;
 //  Sets the KS value
-    public static final double STEER_S_VALUE = 0.13962;
+    public static final double STEER_S_VALUE = 0.16318;
 //  Elevator Constants
     public static final int elevatorLeadID = 4;
     public static final int elevatorFollowID = 5;
@@ -64,20 +64,44 @@ public static final double clawSpeed = .2;
 public static final double softForwardLimitClaw = 12;
 public static final double softReverseLimitClaw = 0;
 
+// Camera XYZ and Rotations
+    //FrontCam
+    public static final Double frontCameraX = 10.0;
+    public static final Double frontCameraY = 10.0;
+    public static final Double frontCameraZ = 8.5;
+
+    public static final Double frontCameraRoll = 0.0;
+    public static final Double frontCameraPitch = -10.0;
+    public static final Double frontCameraYaw = 30.0;
+
+
+
+    //BackCam
+    public static final Double backCameraX = -10.0;
+    public static final Double backCameraY = -10.0;
+    public static final Double backCameraZ = 8.375;
+
+    public static final Double backCameraRoll = 180.0;
+    public static final Double backCameraPitch = 15.0;
+    public static final Double backCameraYaw = -150.0;
+
 /// Vision Constants
     public static class VisionConstants {
         public static final String kFrontCameraName = "dumbdumbcamera";
         public static final String kBackCameraName = "BackCamera";
-        
 
-        public static final Transform3d kRobotToFrontCam = new Transform3d(
-            new Translation3d(Units.inchesToMeters(-10), Units.inchesToMeters(-10), Units.inchesToMeters(9.5) ),
-            new Rotation3d(0,Units.degreesToRadians(100),Units.degreesToRadians(-235)));
         
-        public static final Transform3d kRobotToBackCam = new Transform3d(
-            new Translation3d(Units.inchesToMeters(10),Units.inchesToMeters(10),Units.inchesToMeters(9.5)),
-            new Rotation3d(0,Units.degreesToRadians(-208.125),Units.degreesToRadians(235))
+        //front camera!
+        public static final Transform3d kRobotToFrontCam = new Transform3d(
+            new Translation3d(Units.inchesToMeters(frontCameraX),Units.inchesToMeters(frontCameraY),Units.inchesToMeters(frontCameraZ)),
+            new Rotation3d(frontCameraRoll,Units.degreesToRadians(frontCameraPitch),Units.degreesToRadians(frontCameraYaw))
         );
+
+        //back camera!!
+        public static final Transform3d kRobotToBackCam = new Transform3d(
+            new Translation3d(Units.inchesToMeters(backCameraX), Units.inchesToMeters(backCameraY), Units.inchesToMeters(backCameraZ) ),
+            new Rotation3d(backCameraRoll,Units.degreesToRadians(backCameraPitch),Units.degreesToRadians(backCameraYaw)));
+        
      
     public static final AprilTagFieldLayout kTagLayout = AprilTagFields.kDefaultField.loadAprilTagLayoutField();
 
