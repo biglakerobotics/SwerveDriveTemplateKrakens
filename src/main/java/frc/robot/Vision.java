@@ -98,15 +98,44 @@ public class Vision {
  
              cameraSim.enableDrawWireframe(true);
          }
+         if (Robot.isSimulation()) {
+            // Create the vision system simulation which handles cameras and targets on the field.
+            visionSim = new VisionSystemSim("main2");
+            // Add all the AprilTags inside the tag layout as visible targets to this simulated field.
+            visionSim.addAprilTags(kTagLayout);
+            // Create simulated frontCamera properties. These can be set to mimic your actual frontCamera.
+            var cameraProp = new SimCameraProperties();
+            cameraProp.setCalibration(960, 720, Rotation2d.fromDegrees(90));
+            cameraProp.setCalibError(0.35, 0.10);
+            cameraProp.setFPS(15);
+            cameraProp.setAvgLatencyMs(50);
+            cameraProp.setLatencyStdDevMs(15);
+            // Create a PhotonCameraSim which will update the linked PhotonCamera's values with visible
+            // targets.
+            cameraSim = new PhotonCameraSim(backCamera, cameraProp);
+            // Add the simulated frontCamera to view the targets on this simulated field.
+            visionSim.addCamera(cameraSim, VisionConstants.kRobotToFrontCam);
+
+            cameraSim.enableDrawWireframe(true);
+        }
      }
 
      private Camera GetValidCamera(){
+
         if (frontCamera.getLatestResult().hasTargets()) {
+            System.out.println("FontCameraUsedHasTarget#########");
             return new Camera(frontCamera, photonPoseEstimatorFront);
-        } else if (backCamera.getLatestResult().hasTargets()) {
+        } 
+        else 
+        if (backCamera.getLatestResult().hasTargets()) {
+            System.out.println("BackCameraUsed$$$$$$$$$$$$$$$$$$");
             return new Camera(backCamera, photonPoseEstimatorBack);
-        } else {
+        } 
+        else {
+            System.out.println("FrontCameraUsedDefault@@@@@@@@@@@@@@");
             return new Camera(frontCamera,photonPoseEstimatorFront);
+            // return new Camera(backCamera, photonPoseEstimatorBack);
+
         }
      }
  
