@@ -137,7 +137,7 @@ private void configureAutoBuilder(){
         }
     }
     /* The SysId routine to test */
-    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineSteer; 
+    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation; 
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.

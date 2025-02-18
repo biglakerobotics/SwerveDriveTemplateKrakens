@@ -20,8 +20,8 @@ public class Constants {
 //  Sets P and D values of the PIDs 
     public static final double DRIVE_P_VALUE = 0.062203; 
     public static final double DRIVE_D_VALUE = 0; 
-    public static final double STEER_P_VALUE = 10; 
-    public static final double STEER_D_VALUE = 0.1; 
+    public static final double STEER_P_VALUE = 12; 
+    public static final double STEER_D_VALUE = 0.02; 
     public static final double ELEVATORVOLTS_P_VALUE = .5;
     public static final double ELEVATORVOLTS_D_VALUE = .1;
     public static final double ELEVATORTORQUE_P_VALUE = 0;
@@ -31,7 +31,7 @@ public class Constants {
     public static final double CLAWTORQUE_P_VALUE = 0;
     public static final double CLAWTORQUE_D_VALUE = 0;
 //  Sets the KS value
-    public static final double STEER_S_VALUE = 0.16318;
+    public static final double STEER_S_VALUE = 0.17318;
 //  Elevator Constants
     public static final int elevatorLeadID = 4;
     public static final int elevatorFollowID = 5;
