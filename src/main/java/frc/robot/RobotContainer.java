@@ -8,32 +8,23 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.autocommands.CoralLoadingPos;
-import frc.robot.autocommands.ElevatorStartPos;
 import frc.robot.autocommands.PickupPos;
 import frc.robot.autocommands.ReefLevelOne;
 import frc.robot.autocommands.ReefLevelTwo;
 import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.ClawTeleOp;
-import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorTeleOp;
-import frc.robot.commands.ElevatorUpCommand;
-import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -94,10 +85,10 @@ public class RobotContainer {
             //         .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
             //         .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             // )
-drivetrain.applyRequest(() ->
-                drive.withVelocityX(m_strafeX.calculate(MathUtil.applyDeadband(-joystick.getLeftY(), .1)) * MaxSpeed)
-                .withVelocityY(m_strafeY.calculate(MathUtil.applyDeadband(-joystick.getLeftX(), .1)) * MaxSpeed)
-                .withRotationalRate(MathUtil.applyDeadband(-joystick.getRightX(), .1) * MaxAngularRate)
+            drivetrain.applyRequest(() ->
+                drive.withVelocityX(m_strafeX.calculate(MathUtil.applyDeadband(-joystick.getLeftY(), Constants.DRIVE_DEADBAND)) * MaxSpeed)
+                .withVelocityY(m_strafeY.calculate(MathUtil.applyDeadband(-joystick.getLeftX(), Constants.DRIVE_DEADBAND)) * MaxSpeed)
+                .withRotationalRate(MathUtil.applyDeadband(-joystick.getRightX(), Constants.ANGULAR_DEADBAND) * MaxAngularRate)
         ));
         
         m_strafeX = new SlewRateLimiter(Constants.SLEWRATELIMITER);
