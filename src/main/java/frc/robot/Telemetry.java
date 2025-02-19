@@ -23,7 +23,6 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 public class Telemetry {
     private final double MaxSpeed;
 
-
     /**
      * Construct a telemetry object, with the specified max speed of the robot
      * 
