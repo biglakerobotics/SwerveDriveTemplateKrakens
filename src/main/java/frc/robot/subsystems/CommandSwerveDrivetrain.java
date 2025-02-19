@@ -270,7 +270,6 @@ private void configureAutoBuilder(){
             });
         }
     }
-    //chris p fry
 
     private void startSimThread() {
         m_lastSimTime = Utils.getCurrentTimeSeconds();

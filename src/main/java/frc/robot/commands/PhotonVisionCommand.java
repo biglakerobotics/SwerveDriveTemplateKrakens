@@ -39,7 +39,6 @@
 //         return true;
 //     }
 // }
-
 package frc.robot.commands;
 
 import static frc.robot.Constants.VisionConstants.CAMERA_NAMES;
@@ -48,24 +47,15 @@ import static frc.robot.Constants.VisionConstants.ROBOT_TO_CAMERA_TRANSFORMS;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Vision;
 import frc.robot.VisionConsumer;
-import frc.robot.Constants.VisionConstants;
-
-// import frc.robot.vision.Vision;
-// import frc.robot.VisionConsumer;
-import frc.robot.Vision;
-import frc.robot.PhotonVision.Camera;
 import java.util.Arrays;
-
 
 /**
  * Command to use PhotonVision to process pose estimates and pass them to a pose estimator
  */
 public class PhotonVisionCommand extends Command {
-//   private final Vision[] visions;
-private final Vision[] visions;
-private final VisionConsumer visionConsumer;
-//   private final VisionConsumer visionConsumer;
-// private final VisionConsumer visionConsumer;
+  private final Vision[] visions;
+  private final VisionConsumer visionConsumer;
+
   /**
    * Constructs a PhotonVisionCommand
    * 

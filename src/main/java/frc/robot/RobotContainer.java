@@ -25,6 +25,7 @@ import frc.robot.autocommands.ReefLevelTwo;
 import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.ClawTeleOp;
 import frc.robot.commands.ElevatorTeleOp;
+import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -36,11 +37,10 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * Constants.DRIVE_DEADBAND).withRotationalDeadband(MaxAngularRate * Constants.STEER_DEADBAND) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
@@ -56,23 +56,29 @@ public class RobotContainer {
     private final JoystickButton reefLevelTwoPosButton = new JoystickButton(buttonBoard, 4);
     private final JoystickButton reefLevelThreePosButton = new JoystickButton(buttonBoard, 5);
     private final JoystickButton placeHolderPosButton = new JoystickButton(buttonBoard, 6);
-
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Elevator m_elevator = new Elevator();
     public final Claw m_Claw = new Claw();
+    private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
+
     // public BooleanSupplier spinBoolean;
 
     // private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
+        // drivetrain.addVisionMeasurement(null, MaxAngularRate);
+        
         // new PhotonVisionCommand(drivetrain).schedule();
+       // private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
+       
 
         
 
         // autoChooser = AutoBuilder.buildAutoChooser("Tests");
         // SmartDashboard.putData("Auto Mode", autoChooser);
+        visionCommand.schedule();
         configureBindings();
         
-        m_elevator.setDefaultCommand(new ElevatorTeleOp(xboxController, m_elevator));
+        m_elevator.setDefaultCommand(new ElevatorTeleOp(m_elevator));
     }
 
     private void configureBindings() {
@@ -107,11 +113,19 @@ public class RobotContainer {
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
 
+        //buttonboard
+        pickUpPosButton.onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        coralLoadingPosButton.onTrue(new CoralLoadingPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelOnePosButton.onTrue(new ReefLevelOne(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelTwoPosButton.onTrue(new ReefLevelTwo(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelThreePosButton.onTrue(new ReefLevelThree(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+
         //Elevator controller
         //Manual Elevator
         // bumper + joystick = move arm and elevator        
-        xboxController.rightBumper().whileTrue(new ClawTeleOp(xboxController, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.rightBumper().whileTrue(new ClawTeleOp(m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         //Presets
         // y reef 1
         // x reef 2
