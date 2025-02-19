@@ -12,9 +12,11 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.autocommands.CoralLoadingPos;
 import frc.robot.autocommands.PickupPos;
@@ -35,7 +37,7 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * Constants.DRIVE_DEADBAND).withRotationalDeadband(MaxAngularRate * Constants.STEER_DEADBAND) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -47,20 +49,33 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
     private final CommandXboxController xboxController = new CommandXboxController(1);
-
+    private final Joystick buttonBoard = new Joystick(2);
+    private final JoystickButton pickUpPosButton = new JoystickButton(buttonBoard, 1);
+    private final JoystickButton coralLoadingPosButton = new JoystickButton(buttonBoard, 2);
+    private final JoystickButton reefLevelOnePosButton = new JoystickButton(buttonBoard,3);
+    private final JoystickButton reefLevelTwoPosButton = new JoystickButton(buttonBoard, 4);
+    private final JoystickButton reefLevelThreePosButton = new JoystickButton(buttonBoard, 5);
+    private final JoystickButton placeHolderPosButton = new JoystickButton(buttonBoard, 6);
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Elevator m_elevator = new Elevator();
     public final Claw m_Claw = new Claw();
+    private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
+
     // public BooleanSupplier spinBoolean;
 
     // private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-        new PhotonVisionCommand(drivetrain).schedule();
+        // drivetrain.addVisionMeasurement(null, MaxAngularRate);
+        
+        // new PhotonVisionCommand(drivetrain).schedule();
+       // private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
+       
 
         
 
         // autoChooser = AutoBuilder.buildAutoChooser("Tests");
         // SmartDashboard.putData("Auto Mode", autoChooser);
+        visionCommand.schedule();
         configureBindings();
         
         m_elevator.setDefaultCommand(new ElevatorTeleOp(m_elevator));
@@ -96,6 +111,14 @@ drivetrain.applyRequest(() ->
         joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+
+
+        //buttonboard
+        pickUpPosButton.onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        coralLoadingPosButton.onTrue(new CoralLoadingPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelOnePosButton.onTrue(new ReefLevelOne(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelTwoPosButton.onTrue(new ReefLevelTwo(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelThreePosButton.onTrue(new ReefLevelThree(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
         //Elevator controller
