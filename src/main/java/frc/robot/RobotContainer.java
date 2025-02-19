@@ -91,10 +91,10 @@ public class RobotContainer {
             //         .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
             //         .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             // )
-drivetrain.applyRequest(() ->
-                drive.withVelocityX(m_strafeX.calculate(MathUtil.applyDeadband(-joystick.getLeftY(), .1)) * MaxSpeed)
-                .withVelocityY(m_strafeY.calculate(MathUtil.applyDeadband(-joystick.getLeftX(), .1)) * MaxSpeed)
-                .withRotationalRate(MathUtil.applyDeadband(-joystick.getRightX(), .1) * MaxAngularRate)
+            drivetrain.applyRequest(() ->
+                drive.withVelocityX(m_strafeX.calculate(MathUtil.applyDeadband(-joystick.getLeftY(), Constants.DRIVE_DEADBAND)) * MaxSpeed)
+                .withVelocityY(m_strafeY.calculate(MathUtil.applyDeadband(-joystick.getLeftX(), Constants.DRIVE_DEADBAND)) * MaxSpeed)
+                .withRotationalRate(MathUtil.applyDeadband(-joystick.getRightX(), Constants.ANGULAR_DEADBAND) * MaxAngularRate)
         ));
         
         m_strafeX = new SlewRateLimiter(Constants.SLEWRATELIMITER);
@@ -135,14 +135,18 @@ drivetrain.applyRequest(() ->
         // 7(options) start pos
         // xboxController.button(7).whileTrue(new ElevatorStartPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         // xboxController.button(6).whileTrue(new PickupPos(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.y().onTrue(new ReefLevelOne(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.x().onTrue(new ReefLevelTwo(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.x().onTrue(new ReefLevelOne(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.y().onTrue(new ReefLevelTwo(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.b().onTrue(new ReefLevelThree(m_elevator,m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.a().onTrue(new CoralLoadingPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.back().onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
-
-
+//      elevator presets for button board
+        pickUpPosButton.onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        coralLoadingPosButton.onTrue(new CoralLoadingPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelOnePosButton.onTrue(new ReefLevelOne(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelTwoPosButton.onTrue(new ReefLevelTwo(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelThreePosButton.onTrue(new ReefLevelThree(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
 

@@ -82,7 +82,6 @@ public class Claw implements Subsystem {
     }
     public void ReefLevelOne() {
         clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelOnePos));
-        System.out.println("Running Command");
     }
 
     public void ReefLevelTwo() {

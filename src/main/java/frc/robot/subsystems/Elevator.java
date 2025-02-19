@@ -55,7 +55,7 @@ public class Elevator implements Subsystem {
         elevatorConfigs.Slot1.kI = Constants.ELEVATORTORQUE_I_VALUE;
         elevatorConfigs.Slot1.kD = Constants.ELEVATORTORQUE_D_VALUE;
 
-        elevatorConfigs.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
+        elevatorConfigs.MotorOutput.withInverted(InvertedValue.CounterClockwise_Positive);
 
         elevatorConfigs.CurrentLimits.withStatorCurrentLimit(Constants.peakAmps).withStatorCurrentLimitEnable(true);
         elevatorConfigs.SoftwareLimitSwitch.withForwardSoftLimitEnable(true).withForwardSoftLimitThreshold(Constants.softForwardLimitElevator);
