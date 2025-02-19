@@ -8,29 +8,23 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.autocommands.CoralLoadingPos;
-import frc.robot.autocommands.ElevatorStartPos;
 import frc.robot.autocommands.PickupPos;
 import frc.robot.autocommands.ReefLevelOne;
 import frc.robot.autocommands.ReefLevelTwo;
 import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.ClawTeleOp;
-import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorTeleOp;
-import frc.robot.commands.ElevatorUpCommand;
 import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Claw;
@@ -43,7 +37,7 @@ public class RobotContainer {
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * Constants.DRIVE_DEADBAND).withRotationalDeadband(MaxAngularRate * Constants.STEER_DEADBAND) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -55,23 +49,36 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
     private final CommandXboxController xboxController = new CommandXboxController(1);
-
+    private final Joystick buttonBoard = new Joystick(2);
+    private final JoystickButton pickUpPosButton = new JoystickButton(buttonBoard, 1);
+    private final JoystickButton coralLoadingPosButton = new JoystickButton(buttonBoard, 2);
+    private final JoystickButton reefLevelOnePosButton = new JoystickButton(buttonBoard,3);
+    private final JoystickButton reefLevelTwoPosButton = new JoystickButton(buttonBoard, 4);
+    private final JoystickButton reefLevelThreePosButton = new JoystickButton(buttonBoard, 5);
+    private final JoystickButton placeHolderPosButton = new JoystickButton(buttonBoard, 6);
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Elevator m_elevator = new Elevator();
     public final Claw m_Claw = new Claw();
+    private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
+
     // public BooleanSupplier spinBoolean;
 
     // private final SendableChooser<Command> autoChooser;
     public RobotContainer() {
-        new PhotonVisionCommand(drivetrain).schedule();
+        // drivetrain.addVisionMeasurement(null, MaxAngularRate);
+        
+        // new PhotonVisionCommand(drivetrain).schedule();
+       // private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
+       
 
         
 
         // autoChooser = AutoBuilder.buildAutoChooser("Tests");
         // SmartDashboard.putData("Auto Mode", autoChooser);
+        visionCommand.schedule();
         configureBindings();
         
-        m_elevator.setDefaultCommand(new ElevatorTeleOp(xboxController, m_elevator));
+        m_elevator.setDefaultCommand(new ElevatorTeleOp(m_elevator));
     }
 
     private void configureBindings() {
@@ -106,11 +113,19 @@ drivetrain.applyRequest(() ->
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
 
+        //buttonboard
+        pickUpPosButton.onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        coralLoadingPosButton.onTrue(new CoralLoadingPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelOnePosButton.onTrue(new ReefLevelOne(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelTwoPosButton.onTrue(new ReefLevelTwo(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        reefLevelThreePosButton.onTrue(new ReefLevelThree(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+
         //Elevator controller
         //Manual Elevator
         // bumper + joystick = move arm and elevator        
-        xboxController.rightBumper().whileTrue(new ClawTeleOp(xboxController, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(xboxController, m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.rightBumper().whileTrue(new ClawTeleOp(m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.leftBumper().whileTrue(new ElevatorTeleOp(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         //Presets
         // y reef 1
         // x reef 2

@@ -3,27 +3,20 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Volts;
 
-import java.util.concurrent.TransferQueue;
-
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.NeutralOut;
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.ControlModeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
-import frc.robot.autocommands.CoralLoadingPos;
 
 public class Elevator implements Subsystem {
     TalonFX elevatorLead = new TalonFX(Constants.elevatorLeadID);
@@ -44,6 +37,7 @@ public class Elevator implements Subsystem {
     public TalonFXConfiguration elevatorConfigs = new TalonFXConfiguration();
 
     public final PositionVoltage m_positionVoltage = new PositionVoltage(0).withSlot(0);
+    public final MotionMagicVoltage m_MotionMagicVoltage = new MotionMagicVoltage(0).withSlot(0);
     public final PositionTorqueCurrentFOC m_positionTorque = new PositionTorqueCurrentFOC(0).withSlot(1);
     public final NeutralOut m_brake = new NeutralOut();
 
@@ -51,14 +45,14 @@ public class Elevator implements Subsystem {
 
     public void ElevatorConfiguration() {
         elevatorConfigs.Slot0.kP = Constants.ELEVATORVOLTS_P_VALUE;
-        elevatorConfigs.Slot0.kI = 0;
+        elevatorConfigs.Slot0.kI = Constants.ELEVATORVOLTS_I_VALUE;
         elevatorConfigs.Slot0.kD = Constants.ELEVATORVOLTS_D_VALUE;
 
         elevatorConfigs.Voltage.withPeakForwardVoltage(Volts.of(Constants.peakVoltage))
             .withPeakReverseVoltage(Volts.of(-Constants.peakVoltage));
         
         elevatorConfigs.Slot1.kP = Constants.ELEVATORTORQUE_P_VALUE;
-        elevatorConfigs.Slot1.kI = 0;
+        elevatorConfigs.Slot1.kI = Constants.ELEVATORTORQUE_I_VALUE;
         elevatorConfigs.Slot1.kD = Constants.ELEVATORTORQUE_D_VALUE;
 
         elevatorConfigs.MotorOutput.withInverted(InvertedValue.Clockwise_Positive);
@@ -108,11 +102,11 @@ public class Elevator implements Subsystem {
     }
 
     public void CoralLoadingPos() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.CoralLoadingPos));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.CoralLoadingPos));
     }
 
     public void ReefLevelOne() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelOnePos));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ReefLevelOnePos));
 }
 
     public void ReefLevelTwo() {
