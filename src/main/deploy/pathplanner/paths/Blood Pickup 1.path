@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.378536184210526,
+        "y": 2.6587171052631584
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.5504111842105264,
+        "y": 1.2443256578947361
+      },
+      "isLocked": false,
+      "linkedName": "F"
+    },
+    {
+      "anchor": {
+        "x": 1.1257401315789473,
+        "y": 0.8690789473684208
+      },
+      "prevControl": {
+        "x": 4.0507401315789515,
+        "y": 2.5143914473684217
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Blood Pickup"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 52.59464336859138
+  },
+  "reversed": false,
+  "folder": "Blood Side",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 121.38319105635908
+  },
+  "useDefaultConstraints": true
+}

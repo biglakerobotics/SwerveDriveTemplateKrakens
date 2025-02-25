@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.610773026315789,
+        "y": 1.571463815789474
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.489804376684972,
+        "y": 1.9200668924091233
+      },
+      "isLocked": false,
+      "linkedName": "Blood Start"
+    },
+    {
+      "anchor": {
+        "x": 5.378536184210526,
+        "y": 2.6587171052631584
+      },
+      "prevControl": {
+        "x": 6.328862290236884,
+        "y": 2.171538637019207
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "F"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 121.38319105635908
+  },
+  "reversed": false,
+  "folder": "Blood Side",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 178.53119928561418
+  },
+  "useDefaultConstraints": true
+}

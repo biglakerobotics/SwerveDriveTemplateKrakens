@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.9910361842105263,
+        "y": 7.2290296052631575
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.347697368421053,
+        "y": 6.882648026315789
+      },
+      "isLocked": false,
+      "linkedName": "Top Pickup"
+    },
+    {
+      "anchor": {
+        "x": 3.935279605263158,
+        "y": 5.42014802631579
+      },
+      "prevControl": {
+        "x": 3.579276315789474,
+        "y": 6.141776315789475
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "K(real)"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.470294100065814
+  },
+  "reversed": false,
+  "folder": "Crip Side",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -52.85331330197813
+  },
+  "useDefaultConstraints": true
+}
