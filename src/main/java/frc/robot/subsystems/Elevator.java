@@ -37,7 +37,7 @@ public class Elevator implements Subsystem {
     public TalonFXConfiguration elevatorConfigs = new TalonFXConfiguration();
 
     public final PositionVoltage m_positionVoltage = new PositionVoltage(0).withSlot(0);
-    public final MotionMagicVoltage m_MotionMagicVoltage = new MotionMagicVoltage(0).withSlot(0);
+    public final MotionMagicVoltage m_MotionMagicVoltage = new MotionMagicVoltage(0).withEnableFOC(true);
     public final PositionTorqueCurrentFOC m_positionTorque = new PositionTorqueCurrentFOC(0).withSlot(1);
     public final NeutralOut m_brake = new NeutralOut();
 
@@ -102,11 +102,11 @@ public class Elevator implements Subsystem {
     }
 
     public void CoralLoadingPos() {
-        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.CoralLoadingPos));
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.CoralLoadingPos));
     }
 
     public void ReefLevelOne() {
-        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ReefLevelOnePos));
+        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelOnePos));
 }
 
     public void ReefLevelTwo() {

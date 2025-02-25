@@ -109,33 +109,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             this
         )
     );
-private void configureAutoBuilder(){
-        //by asher, inpiration from stma
-        try{
-            var config = RobotConfig.fromGUISettings();
-            AutoBuilder.configure(
-                () -> getState().Pose,
-                this::resetPose,
-                () ->getState().Speeds,
-                (speeds, feedforwards) -> setControl(
-                    m_pathApplyRobotSpeeds.withSpeeds(speeds)
-                    .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
-                    .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
-                    new PPHolonomicDriveController(
-                        //PID for translation
-                        new PIDConstants(10, 0 , 0),
-                        //PID for rotation
-                        new PIDConstants(7, 0, 0)),
-                        config,
-                        //asher's favorite part of code
-                        () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
-                        this
-                        );
-                        
-        } catch (Exception ex) {
-            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
-        }
-    }
+
     /* The SysId routine to test */
     private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation; 
 
@@ -157,7 +131,35 @@ private void configureAutoBuilder(){
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        // configureAutoBuilder();
+        configureAutoBuilder();
+    }
+
+    private void configureAutoBuilder(){
+        //by asher, inspiration from stma
+        try{
+            var config = RobotConfig.fromGUISettings();
+            AutoBuilder.configure(
+                () -> getState().Pose,
+                this::resetPose,
+                () ->getState().Speeds,
+                (speeds, feedforwards) -> setControl(
+                    m_pathApplyRobotSpeeds.withSpeeds(speeds)
+                    .withWheelForceFeedforwardsX(feedforwards.robotRelativeForcesXNewtons())
+                    .withWheelForceFeedforwardsY(feedforwards.robotRelativeForcesYNewtons())),
+                    new PPHolonomicDriveController(
+                        //PID for translation
+                        new PIDConstants(5, 0 , 0),
+                        //PID for rotation
+                        new PIDConstants(4, 0, 0)),
+                        config,
+                        //asher's favorite part of code
+                        () -> DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red,
+                        this
+                        );
+                        
+        } catch (Exception ex) {
+            DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", ex.getStackTrace());
+        }
     }
 
     /**
@@ -182,7 +184,7 @@ private void configureAutoBuilder(){
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        // configureAutoBuilder();
+        configureAutoBuilder();
     }
 
     /**
@@ -215,7 +217,7 @@ private void configureAutoBuilder(){
         if (Utils.isSimulation()) {
             startSimThread();
         }
-        // configureAutoBuilder();
+        configureAutoBuilder();
     }
 
     /**

@@ -54,7 +54,7 @@ public class Claw implements Subsystem {
             System.out.println("Could not apply configs to lead, error code: " + statusLead.toString());
         }
 
-        clawLead.setPosition(Constants.startPosition);
+        clawLead.setPosition(0);
         clawLead.setNeutralMode(NeutralModeValue.Brake);
 
     }
@@ -91,17 +91,16 @@ public class Claw implements Subsystem {
     public void ReefLevelThree() {
         clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelThreePos));
     }
-
-    public void ReefLevelFour() {
-        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawReefLevelFourPos));
-    }
-
+    
     public void TopOfclaw() {
         clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawTopOfElevator));
     }
 
     public void PickupPos() {
         clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawPickupPos));
+    }
+    public void ClawScore(){
+        clawLead.setControl(m_positionVoltage.withPosition(Constants.ClawCoralLoadingPos));
     }
     
 }
