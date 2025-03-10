@@ -12,7 +12,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
@@ -25,15 +24,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.autocommands.ClawScore;
 import frc.robot.autocommands.CoralLoadingPos;
-import frc.robot.autocommands.ElevatorStartPos;
 import frc.robot.autocommands.PickupPos;
 import frc.robot.autocommands.ReefLevelOne;
 import frc.robot.autocommands.ReefLevelTwo;
 import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.AutoRollerIntakeCommand;
-import frc.robot.commands.ClawDownCommand;
 import frc.robot.commands.ClawTeleOp;
-import frc.robot.commands.ClawUpCommand;
 import frc.robot.commands.ElevatorTeleOp;
 import frc.robot.commands.PhotonVisionCommand;
 import frc.robot.commands.RollerIntakeCommand;
@@ -89,7 +85,7 @@ public class RobotContainer {
     private final AutoRollerIntakeCommand mAutoRollerIntakeCommand = new AutoRollerIntakeCommand(m_RollerIntake);
     private final SendableChooser<Command> autoChooser = new SendableChooser();
 
-    // public BooleanSupplier spinBoolean;
+    // public BooleanSupplier spinBoolean;-0
 
     // private final SendableChooser<Command> autoChooser;
     public RobotContainer() {

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.322540983606557,
+        "y": 5.457530737704917
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.022848360655738,
+        "y": 7.66326844262295
+      },
+      "isLocked": false,
+      "linkedName": "AT_R11-B20"
+    },
+    {
+      "anchor": {
+        "x": 1.2107581967213117,
+        "y": 7.09984631147541
+      },
+      "prevControl": {
+        "x": 2.063788657013366,
+        "y": 6.746011527962747
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Coral Load B13"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -55.0
+  },
+  "reversed": false,
+  "folder": "New Folder",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -119.99999999999999
+  },
+  "useDefaultConstraints": false
+}
