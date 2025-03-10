@@ -205,55 +205,11 @@
               }
             ]
           }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Pickup to K"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Level 3"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Score"
-          }
-        },
-        {
-          "type": "race",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "K back away"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "LoadingPos"
-                }
-              }
-            ]
-          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Crip Start",
+  "folder": null,
   "choreoAuto": false
 }

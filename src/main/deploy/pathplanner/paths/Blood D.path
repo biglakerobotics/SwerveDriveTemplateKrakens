@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6370065789473682,
-        "y": 2.668338815789474
+        "x": 3.623,
+        "y": 2.772
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.318263344853591,
-        "y": 2.1145286762407007
+        "x": 3.064694903513696,
+        "y": 2.358091291179542
       },
       "isLocked": false,
       "linkedName": "D"
     },
     {
       "anchor": {
-        "x": 2.857648026314893,
-        "y": 1.4752467105231961
+        "x": 0.991,
+        "y": 0.771
       },
       "prevControl": {
-        "x": 3.544762427677991,
-        "y": 2.5415510681562243
+        "x": 1.424221610920272,
+        "y": 1.4160178569866453
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 57.65255650055796
+    "rotation": 52.853
   },
   "reversed": false,
   "folder": "Blood Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 57.80426606528683
+    "rotation": 61.25999999999999
   },
   "useDefaultConstraints": true
 }

@@ -29,10 +29,11 @@ public class RollerIntake implements Subsystem{
 
     public RollerIntake() {
         rollerConfiguration();
+        rollerIntakeStart();
     }
 
 
-    public void RollerIntake() {
+    public void rollerIntakeStart() {
         rollerMotor.set(Constants.rollerSpeed);
     }
 

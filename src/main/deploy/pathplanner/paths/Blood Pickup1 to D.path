@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1257401315789473,
-        "y": 0.8690789473684208
+        "x": 0.991,
+        "y": 0.771
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3543605246440213,
-        "y": 1.6873145095641715
+        "x": 1.433715264832411,
+        "y": 1.2618402940716749
       },
       "isLocked": false,
       "linkedName": "Blood Pickup"
     },
     {
       "anchor": {
-        "x": 3.6370065789473682,
-        "y": 2.668338815789474
+        "x": 3.623,
+        "y": 2.772
       },
       "prevControl": {
-        "x": 2.453920737414255,
-        "y": 1.9040086972557018
+        "x": 2.9399058982029818,
+        "y": 2.233221336641729
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 57.80426606528683
+    "rotation": 61.25999999999999
   },
   "reversed": false,
   "folder": "Blood Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 52.59464336859138
+    "rotation": 52.853
   },
   "useDefaultConstraints": true
 }
