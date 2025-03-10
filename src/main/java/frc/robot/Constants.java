@@ -33,6 +33,9 @@ public class Constants {
     public static final double CLAWVOLTS_D_VALUE = .0075;
     public static final double CLAWTORQUE_P_VALUE = 0;
     public static final double CLAWTORQUE_D_VALUE = 0;
+    public static final double CLIMBVOLTS_P_VALUE = 0;
+    public static final double CLIMBVOLTS_D_VALUE = 0;
+
 //  Motion magic Configs for Elevator and Claw
     public static final MotionMagicConfigs ELEVATOR_MAGIC_CONFIGS = new MotionMagicConfigs()
         .withMotionMagicCruiseVelocity(40)
@@ -65,14 +68,18 @@ public class Constants {
     public static final double ClawReefLevelTwoPos = 10.15;
     public static final double ClawReefLevelThreePos = 11;
     public static final double ClawTopOfElevator = 0;
-    public static final double ClawPickupPos = 0.1;
+    public static final double ClawPickupPos = 0;
     
-//Claw Constants
+// Claw Constants
     public static final int clawID = 6;
     public static final double clawSpeed = .25;
 
     public static final double softForwardLimitClaw = 11.85;
     public static final double softReverseLimitClaw = 0;
+
+//  Climber Constants
+    public static final int climbID = 8;
+    public static final double climbSpeed = -1;
 
 //Roller Constants
 public static final int rollerID = 7;

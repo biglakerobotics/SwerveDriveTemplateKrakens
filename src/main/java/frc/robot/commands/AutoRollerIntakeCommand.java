@@ -13,12 +13,12 @@ public class AutoRollerIntakeCommand extends Command {
 
     @Override
     public void execute() {
-        m_rollerIntake.RollerIntake();
+        m_rollerIntake.rollerIntakeStart();
     }
 
     @Override
     public void end(boolean interrupted) {
-        
+
     }
 
     @Override

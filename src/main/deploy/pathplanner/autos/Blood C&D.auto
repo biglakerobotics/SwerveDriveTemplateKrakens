@@ -34,15 +34,15 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "Blood Pickup 1"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "LoadingPos"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Blood Pickup 1"
                 }
               }
             ]
@@ -53,15 +53,15 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 2.0
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "Intake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
                 }
               }
             ]
@@ -91,15 +91,34 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "Blood Pickup1 to D"
+                  "name": "LoadingPos"
                 }
               },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
               {
                 "type": "named",
                 "data": {
                   "name": "Level 3"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Blood Pickup1 to D"
                 }
               }
             ]
@@ -118,7 +137,70 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Blood D End"
+                  "pathName": "Blood D"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "LoadingPos"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "PickupPos"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "LoadingPos"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.0
                 }
               }
             ]
@@ -128,6 +210,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Blood Start",
+  "folder": null,
   "choreoAuto": false
 }

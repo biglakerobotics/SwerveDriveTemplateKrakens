@@ -137,5 +137,11 @@ public class Elevator implements Subsystem {
     public void ElevatorStop() {
         elevatorLead.set(0);
     }
+    public void SoftLimitDisable() {
+        elevatorConfigs.SoftwareLimitSwitch.withForwardSoftLimitEnable(false);
+        elevatorConfigs.SoftwareLimitSwitch.withReverseSoftLimitEnable(false);
+        elevatorLead.getConfigurator().apply(elevatorConfigs);
+    }
+
     
 }

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.2258,
-        "y": 2.6104
+        "x": 2.0,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.802412741824144,
-        "y": 1.79248543868303
+        "x": 3.0,
+        "y": 7.0
       },
       "isLocked": false,
-      "linkedName": "F"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.991,
-        "y": 0.771
+        "x": 3.591138698630137,
+        "y": 5.249593321917807
       },
       "prevControl": {
-        "x": 1.2607080282645762,
-        "y": 0.9829117257011384
+        "x": 3.5610873287671234,
+        "y": 5.730415239726027
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Blood Pickup"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 52.853
+    "rotation": -58.671307132195764
   },
   "reversed": false,
-  "folder": "Blood Side",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 118.74
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 0.991,
+        "y": 0.771
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 7.0
+        "x": 2.3474831022066542,
+        "y": 1.1173431729193046
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blood End D"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 3.935,
+        "y": 2.58
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 3.413711306191407,
+        "y": 1.523349552895865
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.470000000000006
   },
   "reversed": false,
   "folder": "Blood Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 52.853
   },
   "useDefaultConstraints": true
 }

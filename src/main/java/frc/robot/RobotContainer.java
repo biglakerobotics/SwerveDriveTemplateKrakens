@@ -6,6 +6,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import javax.security.sasl.AuthorizeCallback;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -36,9 +38,12 @@ import frc.robot.commands.ClawTeleOp;
 import frc.robot.commands.ClawUpCommand;
 import frc.robot.commands.ElevatorTeleOp;
 import frc.robot.commands.PhotonVisionCommand;
+import frc.robot.commands.QuicklyClimbClimbCommand;
 import frc.robot.commands.RollerIntakeCommand;
+import frc.robot.commands.SoftLimitDisable;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.RollerIntake;
@@ -75,6 +80,7 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Elevator m_elevator = new Elevator();
     public final Claw m_Claw = new Claw();
+    public final Climber m_Climber = new Climber();
     public final RollerIntake m_RollerIntake = new RollerIntake();
     private final PhotonVisionCommand visionCommand = new PhotonVisionCommand(drivetrain::addVisionMeasurement);
 
@@ -88,6 +94,7 @@ public class RobotContainer {
     private final ClawScore mClawScore = new ClawScore(m_Claw);
     private final AutoRollerIntakeCommand mAutoRollerIntakeCommand = new AutoRollerIntakeCommand(m_RollerIntake);
     private final SendableChooser<Command> autoChooser = new SendableChooser();
+    private final SoftLimitDisable mSoftLimitDisable = new SoftLimitDisable(m_elevator);
 
     // public BooleanSupplier spinBoolean;
 
@@ -108,10 +115,12 @@ public class RobotContainer {
        NamedCommands.registerCommand("Score", mClawScore.withTimeout(.5));
 
 
-       autoChooser.addOption("Test Auto",new PathPlannerAuto("J Start Crip"));
-       autoChooser.addOption("Blood C&D", new PathPlannerAuto("Blood C&D"));
+       autoChooser.addOption("Left Auto",new PathPlannerAuto("J Start Crip"));
+       autoChooser.addOption("Right Auto", new PathPlannerAuto("Blood C&D"));
+       autoChooser.addOption("Middle", new PathPlannerAuto("middle"));
 
-       autoChooser.setDefaultOption("Test Auto", new PathPlannerAuto("J Start Crip"));
+
+       autoChooser.setDefaultOption("Left Auto", new PathPlannerAuto("J Start Crip"));
 
        SmartDashboard.putData("AutoChooser", autoChooser);
        
@@ -162,6 +171,7 @@ public class RobotContainer {
         joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        joystick.rightBumper().whileTrue(new QuicklyClimbClimbCommand(m_Climber).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         //Elevator controller
         //Manual Elevator
@@ -185,6 +195,7 @@ public class RobotContainer {
         // xboxController.povDown().onTrue(new ClawScore(m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.povDown().onTrue(new ClawScore(m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         xboxController.povUp().onTrue(new RollerIntakeCommand(m_RollerIntake).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        xboxController.start().onTrue(new SoftLimitDisable(m_elevator).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 //      elevator presets for button board
         pickUpPosButton.onTrue(new PickupPos(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
