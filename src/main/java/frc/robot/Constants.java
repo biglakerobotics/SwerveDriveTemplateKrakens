@@ -23,9 +23,9 @@ public class Constants {
     public static final double DRIVE_D_VALUE = 0; 
     public static final double STEER_P_VALUE = 15; 
     public static final double STEER_D_VALUE = 0.02;
-    public static final double ELEVATORVOLTS_P_VALUE = .475;
+    public static final double ELEVATORVOLTS_P_VALUE = .8;
     public static final double ELEVATORVOLTS_I_VALUE = 0;
-    public static final double ELEVATORVOLTS_D_VALUE = .075;
+    public static final double ELEVATORVOLTS_D_VALUE = .065;
     public static final double ELEVATORTORQUE_P_VALUE = 0;
     public static final double ELEVATORTORQUE_I_VALUE = 0;
     public static final double ELEVATORTORQUE_D_VALUE = 0;
@@ -63,12 +63,12 @@ public class Constants {
     public static final double TopOfElevator = 107;
     public static final double PickupPos = 0.1;
 // Claw Positions
-    public static final double ClawCoralLoadingPos = 0.01;
+    public static final double ClawCoralLoadingPos = -0.5;
     public static final double ClawReefLevelOnePos = 10.15;
     public static final double ClawReefLevelTwoPos = 10.15;
     public static final double ClawReefLevelThreePos = 11;
     public static final double ClawTopOfElevator = 0;
-    public static final double ClawPickupPos = 0;
+    public static final double ClawPickupPos = -0.5;
     
 // Claw Constants
     public static final int clawID = 6;
