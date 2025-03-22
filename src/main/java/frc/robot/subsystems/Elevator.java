@@ -44,6 +44,8 @@ public class Elevator implements Subsystem {
     double elevatorSpeed = Constants.elevatorSpeed;
 
     public void ElevatorConfiguration() {
+
+
         elevatorConfigs.Slot0.kP = Constants.ELEVATORVOLTS_P_VALUE;
         elevatorConfigs.Slot0.kI = Constants.ELEVATORVOLTS_I_VALUE;
         elevatorConfigs.Slot0.kD = Constants.ELEVATORVOLTS_D_VALUE;
@@ -78,9 +80,30 @@ public class Elevator implements Subsystem {
 
         elevatorLead.setPosition(Constants.startPosition);
         elevatorFollow.setPosition(Constants.startPosition);
+        
+        ElevatorMotionMagicConfigs();
 
         elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), true)); 
 
+    }
+
+    public void ElevatorMotionMagicConfigs() {
+        var talonFXConfigs = new TalonFXConfiguration();
+
+        var slot0Configs = talonFXConfigs.Slot0;
+        slot0Configs.kS = 0.25; // Add 0.25 V output to overcome static friction
+        slot0Configs.kV = 0.2; // A velocity target of 1 rps results in 0.12 V output
+        slot0Configs.kA = 0.1; // An acceleration of 1 rps/s requires 0.01 V output
+        slot0Configs.kP = 4.8; // A position error of 2.5 rotations results in 12 V output
+        slot0Configs.kI = 0; // no output for integrated error
+        slot0Configs.kD = 0.025;
+
+        var motionMagicConfigs = talonFXConfigs.MotionMagic;
+        motionMagicConfigs.MotionMagicCruiseVelocity = Constants.ELEVATORCRUISEVELOCITY;
+        motionMagicConfigs.MotionMagicAcceleration = Constants.ELEVATORACCELERATION;
+        motionMagicConfigs.MotionMagicJerk = Constants.ELEVATORJERK;
+
+        elevatorLead.getConfigurator().apply(motionMagicConfigs);
     }
 
     public Elevator() {
@@ -102,27 +125,27 @@ public class Elevator implements Subsystem {
     }
 
     public void CoralLoadingPos() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.CoralLoadingPos));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.CoralLoadingPos));
     }
 
     public void ReefLevelOne() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelOnePos));
-}
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ReefLevelOnePos));
+    }
 
     public void ReefLevelTwo() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelTwoPos));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ReefLevelTwoPos));
     }
 
     public void ReefLevelThree() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.ReefLevelThreePos));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ReefLevelThreePos));
     }
 
     public void TopOfElevator() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.TopOfElevator));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.TopOfElevator));
     }
 
     public void PickupPos() {
-        elevatorLead.setControl(m_positionVoltage.withPosition(Constants.PickupPos));
+        elevatorLead.setControl(m_MotionMagicVoltage.withPosition(Constants.PickupPos));
     }
 
     public void ElevatorUp(){

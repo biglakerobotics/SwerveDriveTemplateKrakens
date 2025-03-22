@@ -21,17 +21,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.autocommands.ClawScore;
-import frc.robot.autocommands.CoralLoadingPos;
-import frc.robot.autocommands.ElevatorStartPos;
-import frc.robot.autocommands.PickupPos;
-import frc.robot.autocommands.ReefLevelOne;
-import frc.robot.autocommands.ReefLevelTwo;
-import frc.robot.autocommands.ReefLevelThree;
 import frc.robot.commands.AutoRollerIntakeCommand;
 import frc.robot.commands.ClawDownCommand;
 import frc.robot.commands.ClawTeleOp;
@@ -47,6 +42,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.RollerIntake;
+import frc.robot.autocommands.*;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -204,7 +200,6 @@ public class RobotContainer {
         reefLevelTwoPosButton.onTrue(new ReefLevelTwo(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         reefLevelThreePosButton.onTrue(new ReefLevelThree(m_elevator, m_Claw).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         rollerIntakeButton.whileTrue(new RollerIntakeCommand(m_RollerIntake).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-
 
 
         

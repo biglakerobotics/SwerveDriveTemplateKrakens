@@ -42,7 +42,7 @@ public class Climber implements Subsystem{
             if (status.isOK()) break;
         }
         if (!status.isOK()) {
-            System.out.println("Could not apply configs to lead, error code: " + status.toString());
+            System.out.println("Could not apply configs to climber, error code: " + status.toString());
         }
 
         climbTalonFX.setPosition(0);

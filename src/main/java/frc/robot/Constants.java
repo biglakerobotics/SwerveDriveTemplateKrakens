@@ -36,10 +36,15 @@ public class Constants {
     public static final double CLIMBVOLTS_P_VALUE = 0;
     public static final double CLIMBVOLTS_D_VALUE = 0;
 
-//  Motion magic Configs for Elevator and Claw
-    public static final MotionMagicConfigs ELEVATOR_MAGIC_CONFIGS = new MotionMagicConfigs()
-        .withMotionMagicCruiseVelocity(40)
-        .withMotionMagicAcceleration(120);
+// Motion Magic Configs
+
+    public static final double ELEVATORCRUISEVELOCITY = 2000;
+    public static final double ELEVATORACCELERATION = 2000;
+    public static final double ELEVATORJERK = 1500;
+
+    public static final double CLAWCRUISEVELOCITY = 500;
+    public static final double CLAWACCELERATION = 500;
+    public static final double CLAWJERK = 1000;
 
 //  Sets the KS value
     public static final double STEER_S_VALUE = 0.17318;
@@ -48,34 +53,34 @@ public class Constants {
     public static final int elevatorFollowID = 5;
     
     public static final double elevatorSpeed = .9;
-    public static final double peakVoltage = 8;
-    public static final double peakAmps = 70;
-    public static final double startPosition = 29;
+    public static final double peakVoltage = 9;
+    public static final double peakAmps = 90;
+    public static final double startPosition = 0;
 
-    public static final double softForwardLimitElevator = 111.5;
-    public static final double softReverseLimitElevator = 0.08;
+    public static final double softForwardLimitElevator = 119;
+    public static final double softReverseLimitElevator = 0;
 
 //  Elevator Positons
     public static final double CoralLoadingPos = 29;
-    public static final double ReefLevelOnePos = 0.5;
-    public static final double ReefLevelTwoPos = 47;
-    public static final double ReefLevelThreePos = 111.5;
-    public static final double TopOfElevator = 107;
-    public static final double PickupPos = 0.1;
+    public static final double ReefLevelOnePos = 18;
+    public static final double ReefLevelTwoPos = 63;
+    public static final double ReefLevelThreePos = 118;
+    public static final double TopOfElevator = 118;
+    public static final double PickupPos = 0;
 // Claw Positions
-    public static final double ClawCoralLoadingPos = -0.5;
-    public static final double ClawReefLevelOnePos = 10.15;
-    public static final double ClawReefLevelTwoPos = 10.15;
+    public static final double ClawCoralLoadingPos = -0.4;
+    public static final double ClawReefLevelOnePos = 11;
+    public static final double ClawReefLevelTwoPos = 11;
     public static final double ClawReefLevelThreePos = 11;
     public static final double ClawTopOfElevator = 0;
-    public static final double ClawPickupPos = -0.5;
+    public static final double ClawPickupPos = -0.4;
     
 // Claw Constants
     public static final int clawID = 6;
-    public static final double clawSpeed = .25;
+    public static final double clawSpeed = .5;
 
     public static final double softForwardLimitClaw = 11.85;
-    public static final double softReverseLimitClaw = 0;
+    public static final double softReverseLimitClaw = -0.2;
 
 //  Climber Constants
     public static final int climbID = 8;
