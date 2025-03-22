@@ -107,8 +107,6 @@ public class Claw implements Subsystem {
         clawLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ClawCoralLoadingPos));
     }
     public void ReefLevelOne(double goalTime) {
-        System.out.println(goalTime);
-        System.out.println(Timer.getTimestamp());
         if (Timer.getTimestamp() >= goalTime) {
             clawLead.setControl(m_MotionMagicVoltage.withPosition(Constants.ClawReefLevelOnePos));
         }
