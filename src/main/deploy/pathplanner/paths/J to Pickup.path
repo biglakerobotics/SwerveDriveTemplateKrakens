@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.1754,
-        "y": 5.415
+        "x": 5.109128289473684,
+        "y": 5.256578947368421
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.752044736842104,
-        "y": 6.2328453947368425
+        "x": 4.685773026315789,
+        "y": 6.074424342105264
       },
       "isLocked": false,
       "linkedName": "J"
@@ -48,7 +48,7 @@
   "folder": "Crip Side",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -118.73979529168825
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": true
 }

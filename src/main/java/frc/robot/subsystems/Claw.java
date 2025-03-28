@@ -39,11 +39,7 @@ public class Claw implements Subsystem {
 
         clawConfigs.Voltage.withPeakForwardVoltage(Volts.of(Constants.peakVoltage))
             .withPeakReverseVoltage(Volts.of(-Constants.peakVoltage));
-        
-        clawConfigs.Slot1.kP = Constants.CLAWTORQUE_P_VALUE;
-        clawConfigs.Slot1.kI = 0;
-        clawConfigs.Slot1.kD = Constants.CLAWTORQUE_D_VALUE;
-
+            
         clawConfigs.CurrentLimits.withStatorCurrentLimitEnable(true).withStatorCurrentLimit(Constants.peakAmps);
         clawConfigs.SoftwareLimitSwitch.withForwardSoftLimitEnable(true).withForwardSoftLimitThreshold(Constants.softForwardLimitClaw);
         clawConfigs.SoftwareLimitSwitch.withReverseSoftLimitEnable(true).withReverseSoftLimitThreshold(Constants.softReverseLimitClaw);
@@ -51,14 +47,14 @@ public class Claw implements Subsystem {
         clawConfigs.TorqueCurrent.withPeakForwardTorqueCurrent(Amps.of(Constants.peakAmps))
             .withPeakReverseTorqueCurrent(Amps.of(Constants.peakAmps));
         
-        StatusCode statusLead = StatusCode.StatusCodeNotInitialized;
-        for (int i = 0; i < 5; ++i) {
-            statusLead = clawLead.getConfigurator().apply(clawConfigs);
-            if (statusLead.isOK()) break;
-        }
-        if (!statusLead.isOK()) {
-            System.out.println("Could not apply configs to lead, error code: " + statusLead.toString());
-        }
+        // StatusCode statusLead = StatusCode.StatusCodeNotInitialized;
+        // for (int i = 0; i < 5; ++i) {
+        //     statusLead = clawLead.getConfigurator().apply(clawConfigs);
+        //     if (statusLead.isOK()) break;
+        // }
+        // if (!statusLead.isOK()) {
+        //     System.out.println("Could not apply configs to lead, error code: " + statusLead.toString());
+        // }
 
         clawLead.setPosition(0);
         clawLead.setNeutralMode(NeutralModeValue.Brake);
@@ -73,16 +69,19 @@ public class Claw implements Subsystem {
         slot0Configs.kS = 0.25; // Add 0.25 V output to overcome static friction
         slot0Configs.kV = 0.2; // A velocity target of 1 rps results in 0.12 V output
         slot0Configs.kA = 0.03; // An acceleration of 1 rps/s requires 0.01 V output
-        slot0Configs.kP = 4.8; // A position error of 2.5 rotations results in 12 V output
+        slot0Configs.kP = 7.6; // A position error of 2.5 rotations results in 12 V output
         slot0Configs.kI = 0; // no output for integrated error
-        slot0Configs.kD = 0.05;
+        slot0Configs.kD = 0.025;
 
         var motionMagicConfigs = talonFXConfigs.MotionMagic;
+        motionMagicConfigs.MotionMagicExpo_kA = Constants.CLAWACCELERATION;
+        motionMagicConfigs.MotionMagicExpo_kV = Constants.CLAWCRUISEVELOCITY;
         motionMagicConfigs.MotionMagicCruiseVelocity = Constants.CLAWCRUISEVELOCITY;
         motionMagicConfigs.MotionMagicAcceleration = Constants.CLAWACCELERATION;
         motionMagicConfigs.MotionMagicJerk = Constants.CLAWJERK;
 
-        clawLead.getConfigurator().apply(motionMagicConfigs);
+         clawLead.getConfigurator().apply(motionMagicConfigs);
+         clawLead.getConfigurator().apply(slot0Configs);
     }
 
     public Claw() {

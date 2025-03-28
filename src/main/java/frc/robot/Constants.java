@@ -26,25 +26,29 @@ public class Constants {
     public static final double ELEVATORVOLTS_P_VALUE = .8;
     public static final double ELEVATORVOLTS_I_VALUE = 0;
     public static final double ELEVATORVOLTS_D_VALUE = .065;
-    public static final double ELEVATORTORQUE_P_VALUE = 0;
-    public static final double ELEVATORTORQUE_I_VALUE = 0;
-    public static final double ELEVATORTORQUE_D_VALUE = 0;
     public static final double CLAWVOLTS_P_VALUE = .24;
     public static final double CLAWVOLTS_D_VALUE = .0075;
-    public static final double CLAWTORQUE_P_VALUE = 0;
-    public static final double CLAWTORQUE_D_VALUE = 0;
     public static final double CLIMBVOLTS_P_VALUE = 0;
     public static final double CLIMBVOLTS_D_VALUE = 0;
 
+// Motion Magic PID Configs
+
+    public static final double ELEVATOR_P_VALUE = 0.8;
+    public static final double ELEVATOR_D_VALUE = 0.065;
+
+    public static final double ELEVATOR_S_VALUE = 0;
+    public static final double ELEVATOR_V_VALUE = 0;
+    public static final double ELEVATOR_A_VALUE = 0;
+
 // Motion Magic Configs
 
-    public static final double ELEVATORCRUISEVELOCITY = 2000;
-    public static final double ELEVATORACCELERATION = 2000;
-    public static final double ELEVATORJERK = 1500;
+    public static final double ELEVATORCRUISEVELOCITY = 175;
+    public static final double ELEVATORACCELERATION = 175;
+    public static final double ELEVATORJERK = 0;
 
-    public static final double CLAWCRUISEVELOCITY = 500;
-    public static final double CLAWACCELERATION = 500;
-    public static final double CLAWJERK = 1000;
+    public static final double CLAWCRUISEVELOCITY = 75;
+    public static final double CLAWACCELERATION = 75;
+    public static final double CLAWJERK = 0;
 
 //  Sets the KS value
     public static final double STEER_S_VALUE = 0.17318;
@@ -100,7 +104,7 @@ public static final double rollerSpeed = .05;
 
         public static final Transform3d kRobotToFrontCam = new Transform3d(
             new Translation3d(Units.inchesToMeters(12.5), Units.inchesToMeters(10.5), Units.inchesToMeters(8.5) ),
-            new Rotation3d(0,Units.degreesToRadians(-10),Units.degreesToRadians(30)));
+            new Rotation3d(0,Units.degreesToRadians(-10),Units.degreesToRadians(-30)));
         
         public static final Transform3d kRobotToBackCam = new Transform3d(
             new Translation3d(Units.inchesToMeters(-8.5),Units.inchesToMeters(-12),Units.inchesToMeters(8.5)),

@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.AutoAllignCommand;
 import frc.robot.commands.AutoRollerIntakeCommand;
 import frc.robot.commands.ClawDownCommand;
 import frc.robot.commands.ClawTeleOp;
@@ -92,6 +93,10 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser = new SendableChooser();
     private final SoftLimitDisable mSoftLimitDisable = new SoftLimitDisable(m_elevator);
 
+    // private final AutoAllignCommand mAllignCommand = new AutoAllignCommand(drivetrain);
+
+    private final double leftPOV = 0;
+
     // public BooleanSupplier spinBoolean;
 
     // private final SendableChooser<Command> autoChooser;
@@ -114,6 +119,7 @@ public class RobotContainer {
        autoChooser.addOption("Left Auto",new PathPlannerAuto("J Start Crip"));
        autoChooser.addOption("Right Auto", new PathPlannerAuto("Blood C&D"));
        autoChooser.addOption("Middle", new PathPlannerAuto("middle"));
+       autoChooser.addOption("3PieceAutoRight", new PathPlannerAuto("3PieceAutoRight"));
 
 
        autoChooser.setDefaultOption("Left Auto", new PathPlannerAuto("J Start Crip"));
@@ -168,6 +174,11 @@ public class RobotContainer {
         joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         joystick.rightBumper().whileTrue(new QuicklyClimbClimbCommand(m_Climber).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        // joystick.leftTrigger().whileTrue(new AutoAllignCommand(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.leftTrigger().and(joystick.povLeft().whileTrue(new AutoAllignCommand(drivetrain)));
+        
+
 
         //Elevator controller
         //Manual Elevator
