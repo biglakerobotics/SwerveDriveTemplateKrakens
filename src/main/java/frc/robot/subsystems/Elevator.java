@@ -191,6 +191,7 @@ public class Elevator implements Subsystem {
         elevatorConfigs.SoftwareLimitSwitch.withForwardSoftLimitEnable(false);
         elevatorConfigs.SoftwareLimitSwitch.withReverseSoftLimitEnable(false);
         elevatorLead.getConfigurator().apply(elevatorConfigs);
+        elevatorFollow.getConfigurator().apply(elevatorConfigs);
     }
 
     

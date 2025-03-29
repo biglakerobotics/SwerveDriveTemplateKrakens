@@ -96,13 +96,16 @@ public static final double rollerSpeed = .05;
 
 /// Vision Constants
     public static class VisionConstants {
+
         public static final String kFrontCameraName = "dumbdumbcamera";
         public static final String kBackCameraName = "BackCamera";
+
+        public static final String kTopLeftCameraName ="TopRightCam";
 
 
         
 
-        public static final Transform3d kRobotToFrontCam = new Transform3d(
+        public static final Transform3d kRobotToTopRightCam = new Transform3d(
             new Translation3d(Units.inchesToMeters(12.5), Units.inchesToMeters(10.5), Units.inchesToMeters(8.5) ),
             new Rotation3d(0,Units.degreesToRadians(-10),Units.degreesToRadians(-30)));
         
@@ -110,6 +113,12 @@ public static final double rollerSpeed = .05;
             new Translation3d(Units.inchesToMeters(-8.5),Units.inchesToMeters(-12),Units.inchesToMeters(8.5)),
             new Rotation3d(0,Units.degreesToRadians(-15),Units.degreesToRadians(-150))
         );
+
+        public static final Transform3d kRobotToTopLeftCam = new Transform3d(
+            new Translation3d(Units.inchesToMeters(-8.5),Units.inchesToMeters(-12),Units.inchesToMeters(26)),
+            new Rotation3d(0,Units.degreesToRadians(-15),Units.degreesToRadians(-150))
+        );
+
      
         public static final AprilTagFieldLayout APRILTAG_FIELD_LAYOUT = AprilTagFieldLayout
         .loadField(AprilTagFields.k2025ReefscapeWelded);
@@ -117,12 +126,14 @@ public static final double rollerSpeed = .05;
     public  static final Matrix<N3, N1> SINGLE_TAG_STD_DEVS = VecBuilder.fill(4,4,8);
     public  static final Matrix<N3, N1> MULTI_TAG_STD_DEVS  = VecBuilder.fill(0.5, 0.5, 1);
 
-    public static final String[] CAMERA_NAMES = new String[] { kFrontCameraName , kBackCameraName
+    public static final String[] CAMERA_NAMES = new String[] { kFrontCameraName , kBackCameraName, kTopLeftCameraName
+
     };
 
     public static final Transform3d[] ROBOT_TO_CAMERA_TRANSFORMS = new Transform3d[] {
-        kRobotToFrontCam
+        kRobotToTopRightCam
         , kRobotToBackCam
+        , kRobotToTopLeftCam
 
     };
 }}

@@ -97,51 +97,37 @@ public class AutoAllignCommandRight extends Command {
   public void execute() {
     var result = camera.getLatestResult();
     boolean hasTargets = result.hasTargets();
-    PhotonTrackedTarget target = result.getBestTarget();
-    double targetY = target.getBestCameraToTarget().getY();
-    double leftTargetY = target.getBestCameraToTarget().getY() + 0.2;
-    double rightTargetY = target.getBestCameraToTarget().getY() - 0.2;
-    double leftTargetX = target.getBestCameraToTarget().getX() - 1;
-    double rightTargetX = target.getBestCameraToTarget().getX() - 1;
-    double targetX = target.getBestCameraToTarget().getX()-1;
-
-    double p = .3;
-
+    
     if (hasTargets) { 
+      PhotonTrackedTarget target = result.getBestTarget();
+      double targetY = target.getBestCameraToTarget().getY();
+      double rightTargetY = targetY - 0.2;
+      double targetX = target.getBestCameraToTarget().getX()-.7;
+      double targetZ = target.getBestCameraToTarget().getZ();
 
-      m_drivetrain.setControl(drive.withVelocityY(rightTargetY*MaxSpeed*p).withVelocityX(rightTargetX*MaxSpeed*p).withRotationalRate(0));
-      if(m_joystick.getHID().getAButton()){
+  
+      double p = .3;
+      System.out.println(targetY);
 
-        // m_drivetrain.setControl(drive.withVelocityY(MaxSpeed*p).withVelocityX(0));
-        System.out.println("a pressed");
+      if (targetY<0.1909 || targetY>0.201) {
+        System.out.println("Works!");
+        m_drivetrain.setControl(drive.withVelocityY(rightTargetY*MaxSpeed*p).withVelocityX(targetX*MaxSpeed*p).withRotationalRate(0));
+
+      } else{
+        m_drivetrain.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
 
       }
-      // if (m_joystickHID.getPOV()==270) {
-      //   // m_drivetrain.applyRequest(() -> drive.withVelocityY(leftTargetY*MaxSpeed*p).withVelocityX(0));
-      //   // m_joystick.povLeft().whileTrue(m_drivetrain.applyRequest(() -> drive.withVelocityY(leftTargetY*MaxSpeed*p).withVelocityX(0)));
-      //   m_drivetrain.setControl(drive.withVelocityY(targetY*MaxSpeed*p).withVelocityX(0));
-      //   System.out.println("left");
-        
-      // }
-      // if (m_joystickHID.getPOV()==180) {
-      //   m_drivetrain.applyRequest(() -> drive.withVelocityY(targetY*MaxSpeed*p).withVelocityX(0));
-      //   // m_joystick.povDown().whileTrue(m_drivetrain.applyRequest(() -> drive.withVelocityY(targetY*MaxSpeed*p).withVelocityX(0)));
-      // }
-      // if (m_joystickHID.getPOV()==90) {
-      //   m_drivetrain.applyRequest(() -> drive.withVelocityY(rightTargetY*MaxSpeed*p).withVelocityX(0));
-      //   // m_joystick.povRight().whileTrue(m_drivetrain.applyRequest(() -> drive.withVelocityY(rightTargetY*MaxSpeed*p).withVelocityX(0)));
-      // }
+      System.out.println("y "+targetY);
+      System.out.println("x "+targetX);
+      System.out.println("z "+targetZ);
 
-      // System.out.println(targetY*MaxSpeed*p);
-      // System.out.println("has targets");
     } else{
-      // m_drivetrain.setControl(drive.withVelocityY(0).withVelocityX(0));      
-      System.out.println("no targets");
+      System.out.println("no targets");   
+       m_drivetrain.setControl(drive.withVelocityX(0).withVelocityY(0).withRotationalRate(0));
+
     }
     System.out.println("command called");
-    System.out.println("y "+targetY);
-    System.out.println("x "+targetX);
-    // System.err.println("POV"+m_joystickHID.getPOV());
+
   }
 
   // Called once the command ends or is interrupted.
@@ -155,4 +141,9 @@ public class AutoAllignCommandRight extends Command {
   public boolean isFinished() {
     return false;
   }
+
+    @Override
+    public boolean runsWhenDisabled() {
+        return false;
+    }
 }

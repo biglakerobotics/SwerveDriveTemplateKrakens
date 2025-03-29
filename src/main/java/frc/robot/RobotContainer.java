@@ -55,7 +55,11 @@ public class RobotContainer {
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * Constants.DRIVE_DEADBAND).withRotationalDeadband(MaxAngularRate * Constants.ANGULAR_DEADBAND) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.Velocity)
-            .withSteerRequestType(SteerRequestType.MotionMagicExpo); // Use open-loop control for drive motors
+            .withSteerRequestType(SteerRequestType.MotionMagicExpo); // Use open-loop control for drive motors4
+    private final SwerveRequest.RobotCentric robotCentricDrive = new SwerveRequest.RobotCentric()
+        .withDeadband(MaxSpeed * Constants.DRIVE_DEADBAND).withRotationalDeadband(MaxAngularRate * Constants.ANGULAR_DEADBAND) // Add a 10% deadband
+        .withDriveRequestType(DriveRequestType.Velocity)
+        .withSteerRequestType(SteerRequestType.MotionMagicExpo);
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
@@ -95,6 +99,9 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser = new SendableChooser();
     private final SoftLimitDisable mSoftLimitDisable = new SoftLimitDisable(m_elevator);
 
+    private final AutoAllignCommandLeft mAllignCommandLeft = new AutoAllignCommandLeft(drivetrain);
+    private final AutoAllignCommandRight mAllignCommandRight = new AutoAllignCommandRight(drivetrain);
+
     // private final AutoAllignCommand mAllignCommand = new AutoAllignCommand(drivetrain);
 
     private final double leftPOV = 0;
@@ -116,6 +123,8 @@ public class RobotContainer {
        NamedCommands.registerCommand("Level 3", mReefLevelThree);
        NamedCommands.registerCommand("Intake", mAutoRollerIntakeCommand);
        NamedCommands.registerCommand("Score", mClawScore.withTimeout(.5));
+       NamedCommands.registerCommand("Line up Left", mAllignCommandLeft);
+       NamedCommands.registerCommand("Line up Right", mAllignCommandRight);
 
 
        autoChooser.addOption("Left Auto",new PathPlannerAuto("J Start Crip"));
@@ -171,17 +180,36 @@ public class RobotContainer {
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
         joystick.rightBumper().whileTrue(new QuicklyClimbClimbCommand(m_Climber).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         // joystick.leftTrigger().whileTrue(new AutoAllignCommand(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        joystick.leftTrigger().and(joystick.povDown().whileTrue(new AutoAllignCommandCenter(drivetrain)));
-        joystick.leftTrigger().and(joystick.povLeft().whileTrue(new AutoAllignCommandLeft(drivetrain)));
-        joystick.leftTrigger().and(joystick.povRight().whileTrue(new AutoAllignCommandRight(drivetrain)));
+        // joystick.rightBumper().and(joystick.povDown().whileTrue(new AutoAllignCommandCenter(drivetrain)));
+        // joystick.rightBumper().and(joystick.povLeft().whileTrue(new AutoAllignCommandLeft(drivetrain)));
+        // joystick.rightBumper().and(joystick.povRight().whileTrue(new AutoAllignCommandRight(drivetrain)));
+
+
+        //Right bumper + dpad = auto allign
+        //Left bumper + dpad = robot centric move
+
+        //Auto Allign
+        joystick.rightBumper().and(joystick.povDown()).whileTrue(new AutoAllignCommandCenter(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.rightBumper().and(joystick.povLeft()).whileTrue(new AutoAllignCommandLeft(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.rightBumper().and(joystick.povRight()).whileTrue(new AutoAllignCommandRight(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
         
+        //Robot Centric Move
+        joystick.povUp().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityX(MaxSpeed*.10).withVelocityY(0)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.povDown().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityX(-MaxSpeed*.10).withVelocityY(0)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.povLeft().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityY(MaxSpeed*.10).withVelocityX(0)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.povRight().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityY(-MaxSpeed*.10).withVelocityX(0)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+
+        joystick.povUpLeft().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityX(MaxSpeed*.10).withVelocityY(MaxSpeed*.10)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.povUpRight().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityX(MaxSpeed*.10).withVelocityY(MaxSpeed*-.10)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.povDownLeft().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityX(MaxSpeed*-.10).withVelocityY(MaxSpeed*.10)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
+        joystick.povDownRight().and(joystick.leftBumper()).whileTrue(drivetrain.applyRequest(() -> robotCentricDrive.withVelocityX(MaxSpeed*-.10).withVelocityY(MaxSpeed*-.10)).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
 
         //Elevator controller
@@ -219,7 +247,7 @@ public class RobotContainer {
 
         
         // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
