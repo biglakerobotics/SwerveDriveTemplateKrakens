@@ -27,7 +27,9 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.AutoAllignCommand;
+import frc.robot.commands.AutoAllignCommandCenter;
+import frc.robot.commands.AutoAllignCommandLeft;
+import frc.robot.commands.AutoAllignCommandRight;
 import frc.robot.commands.AutoRollerIntakeCommand;
 import frc.robot.commands.ClawDownCommand;
 import frc.robot.commands.ClawTeleOp;
@@ -176,7 +178,9 @@ public class RobotContainer {
         joystick.rightBumper().whileTrue(new QuicklyClimbClimbCommand(m_Climber).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
 
         // joystick.leftTrigger().whileTrue(new AutoAllignCommand(drivetrain).withInterruptBehavior(InterruptionBehavior.kCancelSelf));
-        joystick.leftTrigger().and(joystick.povLeft().whileTrue(new AutoAllignCommand(drivetrain)));
+        joystick.leftTrigger().and(joystick.povDown().whileTrue(new AutoAllignCommandCenter(drivetrain)));
+        joystick.leftTrigger().and(joystick.povLeft().whileTrue(new AutoAllignCommandLeft(drivetrain)));
+        joystick.leftTrigger().and(joystick.povRight().whileTrue(new AutoAllignCommandRight(drivetrain)));
         
 
 

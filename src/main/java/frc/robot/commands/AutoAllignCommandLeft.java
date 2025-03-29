@@ -54,7 +54,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AutoAllignCommand extends Command {
+public class AutoAllignCommandLeft extends Command {
 
    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
   private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -65,8 +65,7 @@ public class AutoAllignCommand extends Command {
   public static final XboxController m_joystickHID = m_joystick.getHID();
 
   PhotonCamera camera = new PhotonCamera(Constants.VisionConstants.kFrontCameraName);
-  SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-  .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1)
+  SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
   .withDriveRequestType(DriveRequestType.Velocity);
   // private final SwerveRequest.FieldCentric drive = new SwerveRequest.ApplyRobotSpeeds().withDriveRequestType(DriveRequestType.Velocity);
 
@@ -77,7 +76,7 @@ public class AutoAllignCommand extends Command {
     // withDriveRequestType(DriveRequestType.Velocity);
   
   /** Creates a new AutoAllignCommand. */
-  public AutoAllignCommand(CommandSwerveDrivetrain drivetrain) {
+  public AutoAllignCommandLeft(CommandSwerveDrivetrain drivetrain) {
 
     // m_joystick = joystick;
     m_drivetrain = drivetrain;
@@ -99,14 +98,18 @@ public class AutoAllignCommand extends Command {
     var result = camera.getLatestResult();
     boolean hasTargets = result.hasTargets();
     PhotonTrackedTarget target = result.getBestTarget();
-    double targetY = target.getBestCameraToTarget().getY()*-1;
+    double targetY = target.getBestCameraToTarget().getY();
     double leftTargetY = target.getBestCameraToTarget().getY() + 0.2;
     double rightTargetY = target.getBestCameraToTarget().getY() - 0.2;
+    double leftTargetX = target.getBestCameraToTarget().getX() - 1;
+    double rightTargetX = target.getBestCameraToTarget().getX() - 1;
+    double targetX = target.getBestCameraToTarget().getX()-1;
 
-    double p = .1;
+    double p = .3;
 
     if (hasTargets) { 
-      m_drivetrain.setControl(drive.withVelocityY(targetY*MaxSpeed*p).withVelocityX(0));
+
+      m_drivetrain.setControl(drive.withVelocityY(leftTargetY*MaxSpeed*p).withVelocityX(leftTargetX*MaxSpeed*p).withRotationalRate(0));
       if(m_joystick.getHID().getAButton()){
 
         // m_drivetrain.setControl(drive.withVelocityY(MaxSpeed*p).withVelocityX(0));
@@ -132,11 +135,12 @@ public class AutoAllignCommand extends Command {
       // System.out.println(targetY*MaxSpeed*p);
       // System.out.println("has targets");
     } else{
-      m_drivetrain.setControl(drive.withVelocityY(0).withVelocityX(0));      
+      // m_drivetrain.setControl(drive.withVelocityY(0).withVelocityX(0));      
       System.out.println("no targets");
     }
     System.out.println("command called");
-    System.out.println(targetY);
+    System.out.println("y "+targetY);
+    System.out.println("x "+targetX);
     // System.err.println("POV"+m_joystickHID.getPOV());
   }
 
